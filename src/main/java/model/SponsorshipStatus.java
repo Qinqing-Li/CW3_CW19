@@ -1,7 +1,3 @@
 package model;
 
-public class SponsorshipStatus {
-
-
-
-}
+public enum SponsorshipStatus { ACCEPTED, PENDING, REJECTED }

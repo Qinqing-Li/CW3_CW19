@@ -1,7 +1,3 @@
 package model;
 
-public class BookingStatus {
-
-
-
-}
+public enum BookingStatus { Active, CancelledByConsumer, CancelledByProvider, PaymentFailed }
