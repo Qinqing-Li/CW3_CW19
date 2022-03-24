@@ -19,9 +19,13 @@ public class AddEventPerformanceCommand implements ICommand {
                                       int capacityLimit,
                                       int venueSize){
 
+
+
     }
 
     public void execute(Context context) {
+
+
 
     }
 
