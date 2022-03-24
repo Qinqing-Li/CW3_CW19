@@ -27,6 +27,41 @@ public class BookEventSystemTest {
         Logger.getInstance().clearLog();
         System.out.println("---");
     }
-// First, let's test the success scenario：
+
+private static void consumerBookNthTicketedEvent(Controller controller, int n) {
+    ListEventsCommand cmd = new ListEventsCommand(false, true);
+    controller.runCommand(cmd);
+    List<Event> events = cmd.getResult();
+
+    for (Event event : events) {
+        if (event instanceof TicketedEvent) {
+            n--;
+        }
+
+        if (n <= 0) {
+            Collection<EventPerformance> performance = event.getEventPerformance();
+            controller.runCommand(new BookEventCommand(
+                    event.getBookingNumber(),
+                    performance.iterator().next().getEventPerformance(),
+                    1
+            ));
+            return;
+        }
+    }
+}
+
+
+    loginConsumer1(controller);
+    consumerBookNthTicketedEvent(controller, 1);
+    consumerBookNthTicketedEvent(controller, 2);
+    controller.runCommand(new LogoutCommand());
+
+    loginConsumer2(controller);
+    consumerBookNthTicketedEvent(controller, 2);
+    controller.runCommand(new LogoutCommand());
+
+    loginConsumer3(controller);
+    consumerBookNthTicketedEvent(controller, 4);
+    controller.runCommand(new LogoutCommand());
 
 }

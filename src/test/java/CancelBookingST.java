@@ -25,4 +25,14 @@ public class CancelBookingST {
         System.out.println("---");
     }
 
+    private static void providerCancelFirstEvent(Controller controller) {
+        ListEventsCommand cmd = new ListEventsCommand(true, true);
+        controller.runCommand(cmd);
+        List<Event> events = cmd.getResult();
+        controller.runCommand(new CancelEventCommand(events.get(0).getEventNumber(), "Trololol"));
+    }
+
+    loginEntertainmentProvider(controller);
+    providerCancelFirstEvent(controller);
+    controller.runCommand(new LogoutCommand());
 }
