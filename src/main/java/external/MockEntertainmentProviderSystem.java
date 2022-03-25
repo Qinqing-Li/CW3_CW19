@@ -11,9 +11,9 @@ public class MockEntertainmentProviderSystem implements EntertainmentProviderSys
         this.orgAddress = orgAddress;
     }
 
+    // just calling functions from the interface as an API?
     @Override
     public void cancelBooking (long bookingNumber){
-        System.out.println("The booking " + bookingNumber + "is cancelled");
         cancelBooking(bookingNumber);
     }
 

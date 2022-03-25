@@ -8,7 +8,6 @@ import java.util.List;
 
 public class EventState implements IEventState {
 
-    private EventState eventState;
     private List<Event> events;
     private int eventNumber;
     private int performanceNumber;
@@ -20,13 +19,9 @@ public class EventState implements IEventState {
     }
 
     public EventState(IEventState other) {
-        eventState = null;
-        try{
-            eventState = (EventState) super.clone();
-        }catch (CloneNotSupportedException e){
-            // deep clone failed so we need to create a new instance
-            eventState = new EventState();
-        }
+        events = other.events;
+        eventNumber = other.eventNumber;
+        performanceNumber = other.performanceNumber;
     }
 
     @Override

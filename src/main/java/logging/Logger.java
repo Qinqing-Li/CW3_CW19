@@ -28,7 +28,7 @@ public class Logger {
     }
 
     public void	logAction (String callerName, Object result){
-        LogEntry newLog = new LogEntry(callerName, result, Collections.<String, Object>emptyMap());
+        LogEntry newLog = new LogEntry(callerName, result, Collections.emptyMap());
         logs.add(newLog);
     }
 

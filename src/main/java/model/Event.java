@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public abstract class Event extends Object{
     private long eventNumber;
@@ -17,6 +19,7 @@ public abstract class Event extends Object{
         this.title = title;
         this.type = type;
         this.status = EventStatus.ACTIVE;
+        this.performances = new ArrayList<EventPerformance>();
     }
 
     public void addPerformance(EventPerformance performance){
@@ -36,10 +39,6 @@ public abstract class Event extends Object{
     }
 
     public EventPerformance getPerformanceByNumber(long performanceNumber) {
-        if (performances == null) {
-            throw new NullPointerException("Current event performance is empty");
-        }
-
         for (EventPerformance performance : performances){
             if (performance.getPerformanceNumber() == performanceNumber) {
                 return performance;

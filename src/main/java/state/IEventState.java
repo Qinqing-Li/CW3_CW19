@@ -3,9 +3,15 @@ package state;
 import model.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IEventState {
+    public List<Event> events = new ArrayList<>();
+
+    public int eventNumber = 1;
+
+    public int performanceNumber = 1;
 
     public List<Event> getAllEvents();
 
