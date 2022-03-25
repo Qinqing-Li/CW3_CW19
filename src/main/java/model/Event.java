@@ -58,6 +58,9 @@ public abstract class Event extends Object{
     public EventType getType(){
         return type;
     }
+
+    // added for AddEventPerformanceCommand, but not in javadocs
+    public String getTitle() { return title; }
 }
 
 

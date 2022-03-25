@@ -1,7 +1,9 @@
 package command;
 
 import controller.Context;
+import model.EntertainmentProvider;
 import model.EventType;
+import model.User;
 
 public abstract class CreateEventCommand implements ICommand {
 
@@ -18,11 +20,19 @@ public abstract class CreateEventCommand implements ICommand {
 
 
     protected boolean isUserAllowedToCreateEvent(Context context) {
-        return true;
+        // Is user logged in?
+        if (context.getUserState().getCurrentUser() == null) {
+            return false;
+        }
+
+        // Is user entertainment provider?
+        User currentUser = context.getUserState().getCurrentUser();
+        return currentUser instanceof EntertainmentProvider;
+
     }
 
     public Long getResult() {
-        return null;
+        return eventNumberResult;
     }
 
 }
