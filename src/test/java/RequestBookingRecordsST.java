@@ -23,4 +23,21 @@ public class RequestBookingRecordsST {
         Logger.getInstance().clearLog();
         System.out.println("---");
     }
+
+    private static void governmentAcceptAllSponsorships(Controller controller) {
+        ListSponsorshipRequestsCommand cmd = new ListSponsorshipRequestsCommand(true);
+        controller.runCommand(cmd);
+        List<long> requestNumbers = cmd.getRequestNumber();
+
+        for (long requestNumber : requestNumbers) {
+            controller.runCommand(new RespondSponsorshipCommand(
+                    requestNumber.getRequestNumber(), 25
+            ));
+        }
+    }
+
+    loginGovernmentRepresentative(controller);
+    governmentAcceptAllSponsorships(controller);
+    controller.runCommand(new LogoutCommand());
+
 }

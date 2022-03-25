@@ -23,4 +23,34 @@ public class EPRegisterST {
         Logger.getInstance().clearLog();
         System.out.println("---");
     }
+// To register provide the following information: name, organisation name, organisation main address, email
+// and password, phone number, other representative name(s) and their email addresses, a username or email
+//address for a company account on the payment system
+    private static void register1EntertainmentProvider(Controller controller) {
+
+        controller.runCommand(new RegisterEntertainmentProviderCommand(
+
+                "No org",
+                "Leith Walk",
+                "busk@every.day",
+                "Stephen King",
+                "busk@every.day",
+                Collections.emptyList(),
+                Collections.emptyList()
+        ));
+
+    }
+
+    @Test
+    void getRegisteredConsumers(){
+
+        GovernmentReport1Command cmd = new GovernmentReport1Command("Entertainment Providers");
+        controller.runCommand(cmd);
+        List<Consumer> consumers = cmd.getResult();
+
+        assertEquals(2, consumers.size());
+        assertTrue(EPs.stream().anyMatch(EP -> this.orgName.equals("No org")));
+        assertTrue(EPs.stream().anyMatch(EP -> this.mainRepName.equals("Stephen King")));
+
+    }
 }

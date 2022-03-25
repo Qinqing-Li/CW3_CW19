@@ -81,8 +81,8 @@ public class ConsumerRegisterST {
     // We need to implement getResult in command
     @Test
     void getRegisteredConsumers(){
-        //still investigating...
-        GovernmentReport2Command cmd = new GovernmentReport2Command("Olympics Committee");
+
+        GovernmentReport1Command cmd = new GovernmentReport1Command("Consumers");
         controller.runCommand(cmd);
         List<Consumer> consumers = cmd.getResult();
 
