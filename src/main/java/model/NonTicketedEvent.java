@@ -5,10 +5,4 @@ public class NonTicketedEvent extends Event{
                              String title, EventType type){
         super(eventNumber,organiser,title,type);
     }
-
-    @Override
-    public String toString(){
-        return "Event number " + getEventNumber() + "\norganiser " + getOrganiser()
-                + "\n type " + getType();
-    }
 }

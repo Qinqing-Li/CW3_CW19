@@ -20,32 +20,32 @@ public class SponsorshipRequest {
     }
 
     public TicketedEvent getEvent(){
-        return this.event;
+        return event;
     }
 
     public long	getRequestNumber(){
-        return this.requestNumber;
+        return requestNumber;
     }
 
     public String getSponsorAccountEmail(){
-        if (this.status == SponsorshipStatus.ACCEPTED){
-            return this.sponsorAccountEmail;
+        if (status == SponsorshipStatus.ACCEPTED){
+            return sponsorAccountEmail;
         }
         return null;
     }
     
     public Integer getSponsoredPricePercent(){
-        if (this.status == SponsorshipStatus.ACCEPTED){
-            return this.sponsoredPricePercent;
+        if (status == SponsorshipStatus.ACCEPTED){
+            return sponsoredPricePercent;
         }
         return null;
     }
     
     public SponsorshipStatus getStatus(){
-        return this.status;
+        return status;
     }
     
     public void reject(){
-        this.status = SponsorshipStatus.REJECTED;
+        status = SponsorshipStatus.REJECTED;
     }
 }

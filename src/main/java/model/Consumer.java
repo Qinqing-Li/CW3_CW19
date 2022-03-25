@@ -20,7 +20,7 @@ public class Consumer extends User {
     }
 
     public List<Booking> getBookings(){
-        return this.bookings;
+        return bookings;
     }
 
     public String getName(){
@@ -28,7 +28,7 @@ public class Consumer extends User {
     }
 
     public ConsumerPreferences getPreferences(){
-        return this.preferences;
+        return preferences;
     }
 
     public void	notify (String message){
@@ -46,10 +46,5 @@ public class Consumer extends User {
 
     public void	setPreferences(ConsumerPreferences preferences){
         this.preferences = preferences;
-    }
-
-    @Override
-    public String toString(){
-        return "User name " + name + " phone number " + phoneNumber;
     }
 }

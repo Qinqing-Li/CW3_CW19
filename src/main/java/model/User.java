@@ -1,6 +1,5 @@
 package model;
 
-// import bcrypt here
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public abstract class User {
@@ -19,11 +18,11 @@ public abstract class User {
     }
 
     public String getEmail(){
-        return this.email;
+        return email;
     }
 
     public String getPaymentAccountEmail(){
-        return this.paymentAccountEmail;
+        return paymentAccountEmail;
     }
 
     public void setEmail(String newEmail){
@@ -32,12 +31,6 @@ public abstract class User {
 
     public void setPaymentAccountEmail(String newPaymentAccountEmail){
         this.paymentAccountEmail = newPaymentAccountEmail;
-    }
-
-    @Override
-    public String toString(){
-        return "User email address " + email + "\npayment account email "
-                + paymentAccountEmail;
     }
 
     public void updatePassword(String newPassword){

@@ -35,31 +35,22 @@ public class Booking {
     }
 
     public double getAmountPaid(){
-        return this.amountPaid;
+        return amountPaid;
     }
 
     public Consumer getBooker(){
-        return this.booker;
+        return booker;
     }
 
     public long getBookingNumber(){
-        return this.bookingNumber;
+        return bookingNumber;
     }
 
     public EventPerformance getEventPerformance(){
-        return this.performance;
+        return performance;
     }
 
     public BookingStatus getStatus(){
-        return this.status;
-    }
-
-    @Override
-    public String toString(){
-        return "Booking number is " + bookingNumber +
-                "\nnum of tickets is " + numTickets +
-                "\namount paid is " + amountPaid +
-                "\nbooking date and time is " + bookingDateTime +
-                "\nbooking status is " + this.status;
+        return status;
     }
 }

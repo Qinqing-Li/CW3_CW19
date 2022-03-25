@@ -35,43 +35,38 @@ public class EventPerformance {
     }
 
     public int getCapacityLimit(){
-        return this.capacityLimit;
+        return capacityLimit;
     }
 
     public LocalDateTime getEndDateTime(){
-        return this.endDateTime;
+        return endDateTime;
     }
 
     public Event getEvent(){
-        return this.event;
+        return event;
     }
 
     public long	getPerformanceNumber(){
-        return this.performanceNumber;
+        return performanceNumber;
     }
 
     public LocalDateTime getStartDateTime(){
-        return this.startDateTime;
+        return startDateTime;
     }
 
     public int getVenueSize(){
-        return this.venueSize;
+        return venueSize;
     }
 
     public boolean hasAirFiltration(){
-        return this.hasAirFiltration;
+        return hasAirFiltration;
     }
 
     public boolean hasSocialDistancing(){
-        return this.hasSocialDistancing;
+        return hasSocialDistancing;
     }
 
     public boolean isOutdoors(){
-        return this.isOutdoors;
-    }
-
-    @Override
-    public String toString(){
-        return "";
+        return isOutdoors;
     }
 }

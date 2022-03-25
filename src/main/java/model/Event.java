@@ -28,42 +28,36 @@ public abstract class Event extends Object{
     }
 
     public long getEventNumber(){
-        return this.eventNumber;
+        return eventNumber;
     }
 
     public EntertainmentProvider getOrganiser(){
-        return this.organiser;
+        return organiser;
     }
 
-    public EventPerformance getPerformanceByNumber(long performanceNumber) throws NoSuchFieldException {
-        if (this.performances == null) {
+    public EventPerformance getPerformanceByNumber(long performanceNumber) {
+        if (performances == null) {
             throw new NullPointerException("Current event performance is empty");
         }
 
-        for (EventPerformance performance : this.performances){
+        for (EventPerformance performance : performances){
             if (performance.getPerformanceNumber() == performanceNumber) {
                 return performance;
             }
         }
-        throw new NoSuchFieldException("Performance number " + performanceNumber +
-                " does not exist.");
+        return null;
     }
 
     public Collection<EventPerformance> getPerformances(){
-        return this.performances;
+        return performances;
     }
 
     public EventStatus getStatus(){
-        return this.status;
-    }
-
-    @Override
-    public String toString(){
-        return "";
+        return status;
     }
 
     public EventType getType(){
-        return this.type;
+        return type;
     }
 }
 

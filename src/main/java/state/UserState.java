@@ -10,6 +10,7 @@ public class UserState implements IUserState {
     // map containing all users
     private Map<String, User> users;
     private User currentUser;
+    private UserState userState;
 
     public UserState() {
         this.users = Collections.emptyMap();
@@ -17,7 +18,13 @@ public class UserState implements IUserState {
     }
 
     public UserState(IUserState other) {
-
+        userState = null;
+        try{
+            userState = (UserState) super.clone();
+        }catch (CloneNotSupportedException e){
+            // or do we just print out the message?
+            userState = new UserState();
+        }
     }
 
     // TODO: check is the users Map key the user's email or something else?

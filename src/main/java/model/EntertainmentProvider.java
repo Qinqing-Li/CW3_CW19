@@ -1,5 +1,7 @@
 package model;
 
+import external.EntertainmentProviderSystem;
+
 import java.util.List;
 
 public class EntertainmentProvider extends User{
@@ -11,6 +13,7 @@ public class EntertainmentProvider extends User{
     private List<String> otherRepNames;
     private List<String> otherRepEmails;
     private List<Event> events;
+    private EntertainmentProviderSystem esp;
 
     public EntertainmentProvider(String orgName, String orgAddress, String paymentAccountEmail,
                                   String mainRepName, String mainRepEmail, String password,
@@ -25,11 +28,11 @@ public class EntertainmentProvider extends User{
     }
 
     public void addEvent(Event event){
-        this.events.add(event);
+        events.add(event);
     }
 
     public String getOrgName(){
-        return this.orgName;
+        return orgName;
     }
 
     public void setOrgName(String orgName){
@@ -37,7 +40,7 @@ public class EntertainmentProvider extends User{
     }
 
     public String getOrgAddress(){
-        return this.orgAddress;
+        return orgAddress;
     }
 
     public void setOrgAddress(String orgAddress){
@@ -65,12 +68,6 @@ public class EntertainmentProvider extends User{
     }
 
     public EntertainmentProviderSystem getProviderSystem(){
-        // not implemented
-    }
-
-    @Override
-    public String toString(){
-        return "Organizer name: " + orgName +
-                "\nOrganizer address " + orgAddress;
+        return esp;
     }
 }

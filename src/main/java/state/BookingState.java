@@ -12,17 +12,23 @@ import java.util.List;
 
 public class BookingState implements IBookingState {
 
+    private BookingState bookingState;
     private List<Booking> bookings;
     private int bookingNumber;
 
     public BookingState() {
-        this.bookings = new ArrayList();
+        this.bookings = new ArrayList<Booking>();
         this.bookingNumber = 1;
     }
-
-    // TODO clone other booking state
+    
     public BookingState(IBookingState other) {
-
+        bookingState = null;
+        try{
+            bookingState = (BookingState) super.clone();
+        }catch (CloneNotSupportedException e){
+            // deep clone failed so we need to create a new instance
+            bookingState = new BookingState();
+        }
     }
 
     // returns booking by booking number or null if not present
@@ -39,7 +45,7 @@ public class BookingState implements IBookingState {
     // gets all bookings under certain event
     @Override
     public List<Booking> findBookingsByEventNumber(long eventNumber) {
-        List<Booking> eventBookings = new ArrayList();
+        List<Booking> eventBookings = new ArrayList<Booking>();
         for (Booking booking : bookings) {
             if (booking.getEventPerformance().getPerformanceNumber() == eventNumber) {
                 eventBookings.add(booking);

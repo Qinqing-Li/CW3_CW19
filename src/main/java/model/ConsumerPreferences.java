@@ -1,6 +1,5 @@
 package model;
 
-
 public class ConsumerPreferences {
     private boolean preferAirFiltration;
     private boolean preferOutdoorsOnly;
@@ -16,6 +15,4 @@ public class ConsumerPreferences {
         this.preferredMaxCapacity = Integer.MAX_VALUE;
         this.preferredMaxVenueSize = Integer.MAX_VALUE;
     }
-
-
 }

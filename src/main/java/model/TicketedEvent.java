@@ -48,9 +48,4 @@ public class TicketedEvent extends Event{
     public void	setSponsorshipRequest(SponsorshipRequest sponsorshipRequest){
         this.sponsorshipRequest = sponsorshipRequest;
     }
-
-    @Override
-    public String toString(){
-        return "Ticket price " + ticketPrice + " num of tickets " + numTickets;
-    }
 }
