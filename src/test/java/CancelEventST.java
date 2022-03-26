@@ -2,9 +2,8 @@ import command.*;
 import controller.Controller;
 import logging.Logger;
 import model.*;
-import external.*;
-import state.EventState;
-//import state.BookingState; maybe?
+
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +32,9 @@ public class CancelEventST {
         controller.runCommand(new CancelEventCommand(events.get(0).getEventNumber(), "Trololol"));
     }
 
+    //loginEntertainmentProvider commented out in LogInST
+    loginEntertainmentProvider1(controller);
     providerCancelFirstEvent(controller);
+    controller.runCommand(new LogoutCommand());
 
 }
