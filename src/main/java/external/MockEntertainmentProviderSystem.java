@@ -1,10 +1,13 @@
 package external;
 
+import model.Booking;
+
 import java.time.LocalDateTime;
 
 public class MockEntertainmentProviderSystem implements EntertainmentProviderSystem {
     private String orgName;
     private String orgAddress;
+    private int availableTickets;
 
     public MockEntertainmentProviderSystem(String orgName, String orgAddress){
         this.orgName = orgName;
@@ -14,6 +17,7 @@ public class MockEntertainmentProviderSystem implements EntertainmentProviderSys
     // just calling functions from the interface as an API?
     @Override
     public void cancelBooking (long bookingNumber){
+        Booking booking = Booking.get
         cancelBooking(bookingNumber);
     }
 

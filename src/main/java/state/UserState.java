@@ -13,6 +13,7 @@ public class UserState implements IUserState {
 
     public UserState() {
         this.users = Collections.emptyMap();
+        // add preregistered Government Representatives to the users list
         this.currentUser = null;
     }
 
