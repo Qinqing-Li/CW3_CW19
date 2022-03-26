@@ -1,11 +1,11 @@
 package model;
 
 public class ConsumerPreferences {
-    private boolean preferAirFiltration;
-    private boolean preferOutdoorsOnly;
-    private int preferredMaxCapacity;
-    private int preferredMaxVenueSize;
-    private boolean preferSocialDistancing;
+    public boolean preferAirFiltration;
+    public boolean preferOutdoorsOnly;
+    public int preferredMaxCapacity;
+    public int preferredMaxVenueSize;
+    public boolean preferSocialDistancing;
 
     public ConsumerPreferences(){
         // default constructor

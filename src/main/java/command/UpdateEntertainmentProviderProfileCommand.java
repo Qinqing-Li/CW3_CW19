@@ -83,7 +83,8 @@ public class UpdateEntertainmentProviderProfileCommand extends UpdateProfileComm
         boolean organisationUnique = true;
         for (Map.Entry<String, User> org : context.getUserState().getAllUsers().entrySet()) {
             if (org.getValue() instanceof EntertainmentProvider) {
-                if (newMainRepEmail.equals(((EntertainmentProvider) org.getValue()).getOrgName())) {
+                if (newMainRepEmail.equals(((EntertainmentProvider) org.getValue()).getOrgName()) ||
+                newOrgAddress.equals(((EntertainmentProvider) org.getValue()).getOrgAddress())) {
                     organisationUnique = false;
                     break;
                 }
