@@ -4,7 +4,7 @@ import controller.Context;
 
 public class LogoutCommand implements ICommand {
 
-    // TODO related problems?
+
     public LogoutCommand(){
 
     }

@@ -21,7 +21,6 @@ public class UserState implements IUserState {
         this.currentUser = other.currentUser;
     }
 
-    // TODO: check is the users Map key the user's email or something else?
     @Override
     public void addUser(User user) {
         users.put(user.getEmail(), user);

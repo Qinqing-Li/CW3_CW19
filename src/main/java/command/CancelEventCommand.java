@@ -58,6 +58,7 @@ public class CancelEventCommand implements ICommand {
             booking.cancelByProvider();
         }
         // TODO how do we use organiserMessage?
+        // notify
 
         result = true;
     }

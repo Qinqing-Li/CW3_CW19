@@ -34,6 +34,7 @@ public class ListEventsCommand implements ICommand {
                     ConsumerPreferences preferences = currentConsumer.getPreferences();
                     // TODO how should preferences be compared with all performances on a single event
                     // e.g. should preferences satisfy all performances or just one (assuming they're the same)
+                    // all of the performances
                 }
             }
             if (!added && activeEventsOnly) {
