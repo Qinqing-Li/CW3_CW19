@@ -2,14 +2,14 @@ import command.*;
 import controller.Controller;
 import logging.Logger;
 import model.*;
-import state.EventState;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateEventST {
 
@@ -24,7 +24,9 @@ public class CreateEventST {
         System.out.println("---");
     }
 
-    private static void create1Event(Controller controller) {
+    private static void create2Events(Controller controller) {
+
+        loginEntertainmentProvider1(controller);
 
         CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
                 "Music for everyone!",
@@ -58,6 +60,10 @@ public class CreateEventST {
                 Integer.MAX_VALUE
         ));
 
+        create2Events(controller);
+
         controller.runCommand(new LogoutCommand());
+
+
     }
 }

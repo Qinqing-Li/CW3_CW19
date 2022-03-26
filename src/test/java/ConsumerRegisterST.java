@@ -2,7 +2,6 @@ import command.*;
 import controller.Controller;
 import logging.Logger;
 import model.*;
-import state.UserState;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,16 +26,7 @@ public class ConsumerRegisterST {
         System.out.println("---");
     }
 
-// Create 3 realistic inputs for consumer register
-// Method name inherit from GevReport example, may need change
-// Assume boolean and int preferences are required when registering, not required later
-
-// 3 boolean values and 2 int values represent:
-// social distancing preferred (true, false)
-// air filtration preferred (true, false)
-// outdoors only preferred (true, false)
-// preferred maximum capacity
-// preferred maximum venue size
+    //String name, String email, String phoneNumber, String password, String paymentAccountEmail
 
     private static void register3Consumers(Controller controller) {
         controller.runCommand(new RegisterConsumerCommand(
@@ -44,11 +34,7 @@ public class ConsumerRegisterST {
                 "jbiggson1@hotmail.co.uk",
                 "077893153480",
                 "jbiggson2",
-                true,
-                true,
-                true,
-                20,
-                20
+                "jbiggson1@hotmail.co.uk"
         ));
         controller.runCommand(new LogoutCommand());
         controller.runCommand(new RegisterConsumerCommand(
@@ -56,11 +42,7 @@ public class ConsumerRegisterST {
                 "jane@inf.ed.ac.uk",
                 "04462187232",
                 "giantsRverycool",
-                true,
-                false,
-                true,
-                50,
-                50
+                "jane@inf.ed.ac.uk"
         ));
         controller.runCommand(new LogoutCommand());
         controller.runCommand(new RegisterConsumerCommand(
@@ -68,17 +50,13 @@ public class ConsumerRegisterST {
                 "i-will-kick-your@gmail.com",
                 "-",
                 "it is wednesday my dudes",
-                false,
-                false,
-                false,
-                100,
-                220
+                "i-will-kick-your@gmail.com"
         ));
-        controller.runCommand(new LogoutCommand());
+
+        register3Consumers(controller);
+
     }
 
-    // Now, we test the values are all stored and function properly
-    // We need to implement getResult in command
     @Test
     void getRegisteredConsumers(){
 
