@@ -1,12 +1,15 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import state.BookingState;
 
 public class TestBookingState {
 
     @Test
     @DisplayName("testfindBookingByNumber, should return booking")
     void testfindBookingByNumber(){
+        BookingState.findBookingByNumber(1);
+
         assertEquals (),
                 ("pass");
     }
