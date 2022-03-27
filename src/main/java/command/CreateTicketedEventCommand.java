@@ -26,14 +26,15 @@ public class CreateTicketedEventCommand extends CreateEventCommand {
     @Override
     public void execute(Context context) {
         if (this.isUserAllowedToCreateEvent(context)) {
-            TicketedEvent newEvent = context.getEventState().createTicketedEvent(
-                    (EntertainmentProvider) context.getUserState().getCurrentUser(),
+            EntertainmentProvider thisProvider = (EntertainmentProvider) context.getUserState().getCurrentUser();
+            TicketedEvent newEvent = context.getEventState().createTicketedEvent(thisProvider,
                     title,
                     type,
                     ticketPrice,
                     numTickets);
+
             this.eventNumberResult = newEvent.getEventNumber();
-            // this is where you would implement sponsorship request
+            thisProvider.getProviderSystem().recordNewEvent(newEvent.getEventNumber(), title, numTickets);
         }
         else {
             this.eventNumberResult = null;

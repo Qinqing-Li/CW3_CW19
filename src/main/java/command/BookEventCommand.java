@@ -2,10 +2,7 @@ package command;
 
 import controller.Context;
 import external.EntertainmentProviderSystem;
-import model.Consumer;
-import model.EntertainmentProvider;
-import model.EventPerformance;
-import model.TicketedEvent;
+import model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,8 +51,17 @@ public class BookEventCommand implements ICommand {
                 transactionAmount) :
                 "Transaction unsuccessful.";
 
-        context.getBookingState().createBooking(booker, performance, numTicketsRequested, transactionAmount);
+        Booking newBooking = context.getBookingState().createBooking(booker,
+                performance,
+                numTicketsRequested,
+                transactionAmount);
 
+        providerSystem.recordNewBooking(eventNumber,
+                performanceNumber,
+                newBooking.getBookingNumber(),
+                booker.getName(),
+                booker.getEmail(),
+                numTicketsRequested);
 
     }
 

@@ -15,4 +15,5 @@ public class ConsumerPreferences {
         this.preferredMaxCapacity = Integer.MAX_VALUE;
         this.preferredMaxVenueSize = Integer.MAX_VALUE;
     }
+
 }

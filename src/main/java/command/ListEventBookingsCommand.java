@@ -23,7 +23,7 @@ public class ListEventBookingsCommand implements ICommand {
         assert event != null : "Event number must correspond to an existing event.";
 
         assert event instanceof TicketedEvent : "Event must be a ticketed event.";
-        User currentUser = context.getUserState().getCurrentUser()
+        User currentUser = context.getUserState().getCurrentUser();
         assert (currentUser instanceof EntertainmentProvider ||
                 currentUser instanceof GovernmentRepresentative) :
                 "Logged in user must be a government representative or entertainment provider.";

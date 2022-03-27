@@ -1,6 +1,7 @@
 package command;
 
 import controller.Context;
+import external.EntertainmentProviderSystem;
 import model.Booking;
 import model.EntertainmentProvider;
 import model.Event;
@@ -56,9 +57,11 @@ public class CancelEventCommand implements ICommand {
                     sellerAccountEmail,
                     transactionAmount);
             booking.cancelByProvider();
+            booking.getBooker().notify(organiserMessage);
         }
-        // TODO how do we use organiserMessage?
-        // notify
+
+        EntertainmentProviderSystem providerSystem = entertainmentProvider.getProviderSystem();
+        providerSystem.cancelEvent(event.getEventNumber(), organiserMessage);
 
         result = true;
     }

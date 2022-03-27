@@ -1,6 +1,8 @@
 package command;
 
 import controller.Context;
+import external.EntertainmentProviderSystem;
+import external.MockEntertainmentProviderSystem;
 import model.Booking;
 import model.Consumer;
 import model.EntertainmentProvider;
@@ -44,6 +46,10 @@ public class CancelBookingCommand implements ICommand {
                 "Refund unsuccessful.";
 
         currentBooking.cancelByConsumer();
+
+        EntertainmentProviderSystem providerSystem = seller.getProviderSystem();
+        providerSystem.cancelBooking(currentBooking.getBookingNumber());
+
         result = true;
     }
 
