@@ -24,6 +24,9 @@ public class BookEventCommand implements ICommand {
 
     @Override
     public void execute(Context context) {
+        // move this error message to a better class if suitable:
+        assert context.getUserState().getCurrentUser() != null :
+                "Consumer is not logged in.";
         assert context.getUserState().getCurrentUser() instanceof Consumer :
                 "Logged in user must be a consumer";
         assert context.getEventState().findEventByNumber(eventNumber) != null :
