@@ -9,6 +9,12 @@ public class LoginCommand implements ICommand {
     private String password;
     private User result;
 
+    public enum LogStatus{
+        USER_LOGIN_SUCCESS,
+        USER_LOGIN_EMAIL_NOT_REGISTERED,
+        USER_LOGIN_WRONG_PASSWORD
+    }
+
     public LoginCommand(String email, String password) {
         this.email = email;
         this.password = password;

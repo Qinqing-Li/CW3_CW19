@@ -4,7 +4,12 @@ import controller.Context;
 
 public class LogoutCommand implements ICommand {
 
+    public enum LogStatus{
+        USER_LOGOUT_SUCCESS,
+        USER_LOGOUT_NOT_LOGGED_IN
+    }
 
+    // TODO related problems?
     public LogoutCommand(){
 
     }

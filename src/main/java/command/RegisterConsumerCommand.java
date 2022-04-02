@@ -13,6 +13,13 @@ public class RegisterConsumerCommand implements ICommand {
     private String paymentAccountEmail;
     private Consumer result;
 
+    public enum LogStatus{
+        REGISTER_CONSUMER_SUCCESS,
+        USER_REGISTER_FIELDS_CANNOT_BE_NULL,
+        USER_REGISTER_EMAIL_ALREADY_REGISTERED,
+        USER_LOGIN_SUCCESS
+    }
+
     public RegisterConsumerCommand(String name,
                                     String email,
                                     String phoneNumber,

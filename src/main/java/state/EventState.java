@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventState implements IEventState {
+public class EventState implements IEventState, Cloneable {
 
     private List<Event> events;
     private int eventNumber;
@@ -19,9 +19,23 @@ public class EventState implements IEventState {
     }
 
     public EventState(IEventState other) {
-        events = other.events;
-        eventNumber = other.eventNumber;
-        performanceNumber = other.performanceNumber;
+        EventState eventState;
+        EventState tempState = (EventState) other;
+
+        try{
+            eventState = (EventState) tempState.clone();
+        }catch(CloneNotSupportedException e){
+            eventState = new EventState();
+        }
+
+        events = eventState.events;
+        eventNumber = eventState.eventNumber;
+        performanceNumber = eventState.performanceNumber;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
 
     @Override
@@ -62,14 +76,11 @@ public class EventState implements IEventState {
                 capacityLimit,
                 venueSize);
         event.addPerformance(newPerformance);
-        performanceNumber++;
         return newPerformance;
     }
 
     @Override
-    public NonTicketedEvent createNonTicketedEvent(EntertainmentProvider organiser,
-                                                   String title,
-                                                   EventType type) {
+    public NonTicketedEvent createNonTicketedEvent(EntertainmentProvider organiser, String title, EventType type) {
         NonTicketedEvent newEvent = new NonTicketedEvent(eventNumber, organiser, title, type);
         events.add(newEvent);
         eventNumber++;
@@ -77,11 +88,7 @@ public class EventState implements IEventState {
     }
 
     @Override
-    public TicketedEvent createTicketedEvent(EntertainmentProvider organiser,
-                                             String title,
-                                             EventType type,
-                                             double ticketPrice,
-                                             int numTickets) {
+    public TicketedEvent createTicketedEvent(EntertainmentProvider organiser, String title, EventType type, double ticketPrice, int numTickets) {
         TicketedEvent newEvent = new TicketedEvent(eventNumber, organiser, title, type, ticketPrice, numTickets);
         events.add(newEvent);
         eventNumber++;

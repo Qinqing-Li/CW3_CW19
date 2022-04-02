@@ -17,5 +17,4 @@ public interface IUserState {
     public User getCurrentUser();
 
     public void setCurrentUser(User user);
-
 }

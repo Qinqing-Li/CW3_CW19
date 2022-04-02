@@ -1,5 +1,6 @@
 package logging;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,11 @@ public class Logger {
 
     private Logger(){
         logger_instance = new Logger();
+        logs = new ArrayList<>();
     }
 
     public void	clearLog(){
-        logger_instance = null;
+        logger_instance.logs.clear();
     }
 
     public static Logger getInstance(){

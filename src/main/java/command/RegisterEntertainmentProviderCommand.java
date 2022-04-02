@@ -19,6 +19,14 @@ public class RegisterEntertainmentProviderCommand implements ICommand {
     private List <String> otherRepNames;
     private List<String> otherRepEmails;
 
+    public enum LogStatus{
+        REGISTER_ENTERTAINMENT_PROVIDER_SUCCESS,
+        USER_REGISTER_FIELDS_CANNOT_BE_NULL,
+        USER_REGISTER_EMAIL_ALREADY_REGISTERED,
+        USER_REGISTER_ORG_ALREADY_REGISTERED,
+        USER_LOGIN_SUCCESS
+    }
+
     public RegisterEntertainmentProviderCommand(String orgName,
                                                  String orgAddress,
                                                  String paymentAccountEmail,

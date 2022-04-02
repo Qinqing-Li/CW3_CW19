@@ -10,7 +10,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookingState implements IBookingState {
+public class BookingState implements IBookingState, Cloneable{
 
     private List<Booking> bookings;
     private int bookingNumber;
@@ -21,8 +21,22 @@ public class BookingState implements IBookingState {
     }
     
     public BookingState(IBookingState other) {
-        this.bookings = other.bookings;
-        bookingNumber = other.bookingNumber;
+        BookingState bookingState;
+        BookingState tempState = (BookingState) other;
+
+        try{
+            bookingState = (BookingState) tempState.clone();
+        }catch(CloneNotSupportedException e){
+            bookingState = new BookingState();
+        }
+
+        this.bookings = bookingState.bookings;
+        this.bookingNumber = bookingState.bookingNumber;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
 
     // returns booking by booking number or null if not present

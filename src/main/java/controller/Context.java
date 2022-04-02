@@ -10,18 +10,28 @@ public class Context {
     private UserState userState;
     private EventState eventState;
     private BookingState bookingState;
-    private SponsorshipState sponsorshipState;
 
     public Context() {
         this.paymentSystem = new MockPaymentSystem();
         this.userState = new UserState();
         this.eventState = new EventState();
         this.bookingState = new BookingState();
-        this.sponsorshipState = new SponsorshipState();
     }
 
-    // needs to be implemented
-    // public Context(Context other) {}
+    public Context (Context other){
+        this.paymentSystem = other.paymentSystem;
+
+        try{
+            userState = (UserState) other.userState.clone();
+            eventState = (EventState) other.eventState.clone();
+            bookingState = (BookingState) other.bookingState.clone();
+        }catch (CloneNotSupportedException e){
+            // create default new instances when clone failed
+            this.userState = new UserState();
+            this.eventState = new EventState();
+            this.bookingState = new BookingState();
+        }
+    }
 
     public PaymentSystem getPaymentSystem() {
         return paymentSystem;
@@ -38,9 +48,4 @@ public class Context {
     public IEventState getEventState() {
         return eventState;
     }
-
-    public ISponsorshipState getSponsorshipState() {
-        return sponsorshipState;
-    }
-
 }

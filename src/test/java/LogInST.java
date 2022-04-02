@@ -1,20 +1,32 @@
-import command.*;
+import command.LoginCommand;
+import command.RegisterConsumerCommand;
 import controller.Controller;
 import logging.Logger;
-import model.*;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import model.Consumer;
+import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LogInST {
+
+    private static Controller controller;
+    private final static String TESTNAME = "john";
+    private final static String TESTEMAIL = "john@gmail.com";
+    private final static String TESTPHONENUMBER = "08888654321";
+    private final static String TESTPASSWORD = "john#password";
+    private final static String TESTPAYMENTACCOUNTEMAIL = "john123@gmail.com";
+
+    private String makeBanner(String testcaseName){
+        return "##########################\n" +
+                "test case name: " + testcaseName +
+                "\n#########################";
+    }
 
     @BeforeEach
     void printTestName(TestInfo testInfo) {
         System.out.println(testInfo.getDisplayName());
+        controller = new Controller();
     }
 
     @AfterEach
@@ -23,52 +35,49 @@ public class LogInST {
         System.out.println("---");
     }
 
-    /* private static void loginGovernmentRepresentative(Controller controller) {
-        controller.runCommand(new LoginCommand("margaret.thatcher@gov.uk", "The Good times  "));
-    }
-    private static void loginEntertainmentProvider1(Controller controller) {
-        controller.runCommand(new LoginCommand("anonymous@gmail.com", "anonymous@gmail.com"));
-    }
+    @Test
+    void testOnNonExistedUser(){
+        try{
+            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+                controller.runCommand(new LoginCommand(TESTEMAIL, TESTPASSWORD));
+            }, "An assertion error should be raised for non-existed user email");
+            assertEquals("Account email is not registered on the system.", expectedError.getMessage(), "Assertion error message should be the same");
+        }catch(Exception e){
+            return;
+        }
 
-
-    private static void loginEntertainmentProvider2(Controller controller) {
-        controller.runCommand(new LoginCommand("ep2@gmail.com", "ep2password"));
-    } */
-
-
-    private static void loginConsumer1(Controller controller) {
-        controller.runCommand(new LoginCommand("jbiggson1@hotmail.co.uk", "jbiggson2"));
+        Logger.getInstance().logAction(makeBanner("test on non-existed user email"), LoginCommand.LogStatus.USER_LOGIN_EMAIL_NOT_REGISTERED);
     }
 
-    private static void loginConsumer2(Controller controller) {
-        controller.runCommand(new LoginCommand("jane@inf.ed.ac.uk", "giantsRverycool"));
+    @Test
+    void testWrongPassword(){
+        controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL, TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL));
+
+        try{
+            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+                controller.runCommand(new LoginCommand(TESTEMAIL, "random gibberish"));
+            }, "An assertion error should be raised for wrong user password");
+            assertEquals("Password does not match email.", expectedError.getMessage(), "Assertion error message should be the same");
+        }catch(Exception e){
+            return;
+        }
+
+        Logger.getInstance().logAction(makeBanner("test on wrong user password"), LoginCommand.LogStatus.USER_LOGIN_WRONG_PASSWORD);
     }
 
-    private static void loginConsumer3(Controller controller) {
-        controller.runCommand(new LoginCommand("i-will-kick-your@gmail.com", "it is wednesday my dudes"));
+    @Test
+    void testSuccess(){
+        controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL, TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL));
+        LoginCommand loginCommand = new LoginCommand(TESTEMAIL, TESTPASSWORD);
+        Consumer consumer = new Consumer(TESTNAME, TESTEMAIL, TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL);
+
+        try{
+            assertDoesNotThrow(() -> { controller.runCommand(loginCommand); }, "Correct input should not raise any errors");
+            assertEquals(consumer, loginCommand.getResult(), "Current loged in user should be set to the new user");
+        }catch(Exception e){
+            return;
+        }
+
+        Logger.getInstance().logAction(makeBanner("test on login success case"), LoginCommand.LogStatus.USER_LOGIN_SUCCESS);
     }
-
-    /* loginGovernmentRepresentative(controller);
-    governmentAcceptAllSponsorships(controller);
-    controller.runCommand(new LogoutCommand());
-
-    loginEntertainmentProvider1(controller);
-    providerCancelFirstEvent(controller);
-    controller.runCommand(new LogoutCommand());
-
-    loginEntertainmentProvider2(controller);
-    providerCancelFirstEvent(controller);
-    controller.runCommand(new LogoutCommand());*/
-
-
-    loginConsumer1(controller);
-    controller.runCommand(new LogoutCommand());
-
-    loginConsumer2(controller);
-    controller.runCommand(new LogoutCommand());
-
-    loginConsumer3(controller);
-    controller.runCommand(new LogoutCommand());
-
-
 }
