@@ -62,11 +62,14 @@ public class EventState implements IEventState {
                 capacityLimit,
                 venueSize);
         event.addPerformance(newPerformance);
+        performanceNumber++;
         return newPerformance;
     }
 
     @Override
-    public NonTicketedEvent createNonTicketedEvent(EntertainmentProvider organiser, String title, EventType type) {
+    public NonTicketedEvent createNonTicketedEvent(EntertainmentProvider organiser,
+                                                   String title,
+                                                   EventType type) {
         NonTicketedEvent newEvent = new NonTicketedEvent(eventNumber, organiser, title, type);
         events.add(newEvent);
         eventNumber++;
@@ -74,7 +77,11 @@ public class EventState implements IEventState {
     }
 
     @Override
-    public TicketedEvent createTicketedEvent(EntertainmentProvider organiser, String title, EventType type, double ticketPrice, int numTickets) {
+    public TicketedEvent createTicketedEvent(EntertainmentProvider organiser,
+                                             String title,
+                                             EventType type,
+                                             double ticketPrice,
+                                             int numTickets) {
         TicketedEvent newEvent = new TicketedEvent(eventNumber, organiser, title, type, ticketPrice, numTickets);
         events.add(newEvent);
         eventNumber++;

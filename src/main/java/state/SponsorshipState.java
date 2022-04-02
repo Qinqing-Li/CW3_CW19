@@ -1,2 +1,4 @@
-package state;public class SponsorshipState {
+package state;
+
+public class SponsorshipState implements ISponsorshipState {
 }

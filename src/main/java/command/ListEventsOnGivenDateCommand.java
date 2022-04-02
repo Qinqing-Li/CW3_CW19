@@ -37,6 +37,7 @@ public class ListEventsOnGivenDateCommand extends ListEventsCommand {
                 }
             }
         }
+        result = eventsWithValidDates;
     }
 
     public List<Event> getResult() {
