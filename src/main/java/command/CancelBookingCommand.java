@@ -24,7 +24,7 @@ public class CancelBookingCommand implements ICommand {
 
     public void execute(Context context) {
         result = false;
-
+        assert context.getUserState().getCurrentUser() != null : "Consumer is not logged in.";
         assert context.getUserState().getCurrentUser() instanceof Consumer : "User must be consumer.";
         Consumer currentConsumer = (Consumer) context.getUserState().getCurrentUser();
         Booking currentBooking = context.getBookingState().findBookingByNumber(bookingNumber);
