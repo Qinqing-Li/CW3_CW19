@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestUserState" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-07T19:18:32" hostname="liangsiyudeMBP" time="2.268">
+  <properties/>
+  <testcase name="testCurrentUser()" classname="TestUserState" time="2.268"/>
+  <system-out><![CDATA[testCurrentUser()
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

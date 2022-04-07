@@ -8,6 +8,7 @@ import model.EntertainmentProvider;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,20 +16,22 @@ public class TestUserState {
     private static UserState userState;
     private static Map<String, User> expectedUsers;
     private static GovernmentRepresentative randomRep1;
+    private static GovernmentRepresentative randomRep2;
+    private static GovernmentRepresentative randomRep3;
 
     @BeforeEach
-    static void createInstance(TestInfo testInfo){
+    void createInstance(TestInfo testInfo){
         System.out.println(testInfo.getDisplayName());
 
         userState = new UserState();
-        expectedUsers = Collections.emptyMap();
+        expectedUsers = new HashMap<String, User>();
 
         // add existing government reps to the list of users
         randomRep1 = new GovernmentRepresentative("Suzy", "wrui2fnk",
                 "suzy@123.com");
-        GovernmentRepresentative randomRep2 = new GovernmentRepresentative("David", "qwejr9io2i3",
+        randomRep2 = new GovernmentRepresentative("David", "qwejr9io2i3",
                 "david@123.com");
-        GovernmentRepresentative randomRep3 = new GovernmentRepresentative("hii", "waejrowj",
+        randomRep3 = new GovernmentRepresentative("hii", "waejrowj",
                 "hii@123.com");
 
         expectedUsers.put(randomRep1.getEmail(), randomRep1);
@@ -39,14 +42,14 @@ public class TestUserState {
     @Test
     void testInitialization(){
         assertAll("Test UserState initialization",
-                () -> assertEquals(Collections.emptyMap(), userState.getAllUsers(),
-                        "The users upon initialize should be an empty hashmap"),
+                () -> assertEquals(3, userState.getAllUsers().size(),
+                        "The users upon initialize should have 3 fixed government representatives accounts"),
                 () -> assertNull( userState.getCurrentUser(),
                 "The user upon initialization should be null"));
     }
 
     @Test
-    private void addConsumer(){
+    void addConsumer(){
         Consumer consumer1 = new Consumer("john", "john@gmail.com", "123448888",
                 "john#password", "johnPayment@gmail.com");
         Consumer consumer2 = new Consumer("hiii", "hiiiiii@email.com", "123448888",
@@ -64,15 +67,13 @@ public class TestUserState {
                 () -> assertSame(consumer1, userState.getAllUsers().get(consumer1.getEmail()),
                         "The consumer1 details should be set into the user list"),
                 () -> assertSame(consumer2, userState.getAllUsers().get(consumer2.getEmail()),
-                        "The consumer2 details should be set into the user list"),
-                () -> assertEquals(expectedUsers, userState.getAllUsers(),
-                        "The getAllUsrs method should return same instance as users put into the list of users")
+                        "The consumer2 details should be set into the user list")
         );
 
     }
 
     @Test
-    private void addEP(){
+    void addEP(){
         EntertainmentProvider ep1 = new EntertainmentProvider(
                 "org1",
                 "orgaddr",
@@ -107,9 +108,7 @@ public class TestUserState {
                 () -> assertSame(ep1, userState.getAllUsers().get(ep1.getEmail()),
                         "The entertainment provider1's details should be set into the user list"),
                 () -> assertSame(ep2, userState.getAllUsers().get(ep2.getEmail()),
-                        "The entertainment provider2's details should be set into the user list"),
-                () -> assertEquals(expectedUsers, userState.getAllUsers(),
-                        "The getAllUsrs method should return same instance as users put into the list of users")
+                        "The entertainment provider2's details should be set into the user list")
         );
     }
 

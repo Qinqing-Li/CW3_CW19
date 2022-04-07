@@ -20,12 +20,13 @@ model/BookingStatus.java
  model.BookingStatus
 model/User.java
  model.User
-state/UserState.java
- state.UserState
+model/Event.java
+ model.Event
 model/EventPerformance.java
  model.EventPerformance
-controller/Context.java
- controller.Context
+command/RegisterEntertainmentProviderCommand.java
+ command.RegisterEntertainmentProviderCommand
+ command.RegisterEntertainmentProviderCommand$LogStatus
 external/MockEntertainmentProviderSystem.java
  external.MockEntertainmentProviderSystem
 command/CancelBookingCommand.java
@@ -107,8 +108,7 @@ command/ListEventBookingsCommand.java
  command.ListEventBookingsCommand
 command/ICommand.java
  command.ICommand
-model/Event.java
- model.Event
-command/RegisterEntertainmentProviderCommand.java
- command.RegisterEntertainmentProviderCommand
- command.RegisterEntertainmentProviderCommand$LogStatus
+controller/Context.java
+ controller.Context
+state/UserState.java
+ state.UserState
