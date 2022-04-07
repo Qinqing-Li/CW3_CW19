@@ -20,6 +20,7 @@ public class BookEventSystemTest {
 
     private static Logger logger;
     private LogStatus status;
+    private Controller controller;
     private static BookEventCommand BookEventCommand;
     private static CancelEventCommand CancelEventCommand;
     private static CreateNonTicketedEventCommand CreateNonTicketedEventCommand;
@@ -87,27 +88,33 @@ public class BookEventSystemTest {
     private final static long test9PerformanceNumber = 99999;
     private final static long successPerformanceNumber = 3;
 
+    @BeforeAll
+    public void registeringConsumer(){
+        controller = new Controller();
+        controller.runCommand(new RegisterConsumerCommand ("abc",
+                TESTEMAIL,
+                "07497111111",
+                TESTPASSWORD,
+                TESTEMAIL)
+        );
+
+        return controller.runCommand(new RegisterConsumerCommand.getResult());
+    }
+
 
 
     @BeforeEach
-    void loginConsumer(Controller controller, final TestInfo info){
+    void loginConsumer(final TestInfo info){
         final Set<String> testTags = info.getTags();
         if(testTags.stream().anyMatch(tag->tag.equals("skipBeforeEach"))){
             return;
         }else{
+
             controller.runCommand(new LoginCommand(TESTEMAIL,TESTPASSWORD));
         }
+        System.out.println(info.getDisplayName());
     }
 
-    @BeforeEach
-    void printTestName(TestInfo testInfo) {
-        System.out.println(testInfo.getDisplayName());
-    }
-
-    @AfterEach
-    void logoutConsumer(Controller controller){
-        controller.runCommand(new LogoutCommand());
-    }
 
     @AfterEach
     void clearLogs() {
@@ -120,11 +127,11 @@ public class BookEventSystemTest {
     @Test
     @DisplayName("testReturnError1, Error: this action is only available to consumer")
     @Tag("skipBeforeEach")
-    public void testReturnError1(Controller controller){
+    public void testReturnError1(){
         this.status = LogStatus.BOOK_EVENT_USER_NOT_CONSUMER;
 
         //first register a EP
-        RegisterEntertainmentProviderCommand = new RegisterEntertainmentProviderCommand(
+        controller.runCommand(new RegisterEntertainmentProviderCommand(
                 orgName,
                 orgAddress,
                 paymentAccountEmail,
@@ -133,7 +140,7 @@ public class BookEventSystemTest {
                 password,
                 otherRepNames,
                 otherRepEmails
-        );
+        ));
 
         //then EP login
         controller.runCommand(new LoginCommand(mainRepEmail,password));
@@ -366,28 +373,6 @@ public class BookEventSystemTest {
                 "Message should indicate transaction unsuccessful"
         );
     }
-
-    @Test
-    @DisplayName("testSuccessCase, booking was made")
-    public void testSuccessCase(){
-        BookEventCommand = new BookEventCommand(
-                successEventNumber,
-                successPerformanceNumber,
-                2
-        );
-        GetAvailablePerformanceTicketsCommand = new GetAvailablePerformanceTicketsCommand(
-                successEventNumber,
-                successPerformanceNumber
-        );
-        this.status = LogStatus.BOOK_EVENT_SUCCESS;
-
-        assertEquals(
-                2,
-                GetAvailablePerformanceTicketsCommand.getResult(),
-                "Result should be num.of tickets: 2");
-    }
-
-}
 
     @Test
     @DisplayName("testSuccessCase, booking was made")
