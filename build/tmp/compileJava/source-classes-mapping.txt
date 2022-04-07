@@ -2,14 +2,14 @@ logging/LogEntry.java
  logging.LogEntry
 state/IEventState.java
  state.IEventState
-command/GovernmentReport1Command.java
- command.GovernmentReport1Command
+command/ICommand.java
+ command.ICommand
 controller/Controller.java
  controller.Controller
 state/ISponsorshipState.java
  state.ISponsorshipState
-command/BookEventCommand.java
- command.BookEventCommand
+model/GovernmentRepresentative.java
+ model.GovernmentRepresentative
 external/MockPaymentSystem.java
  external.MockPaymentSystem
 command/ListSponsorshipRequestsCommand.java
@@ -37,21 +37,20 @@ model/EntertainmentProvider.java
 command/LoginCommand.java
  command.LoginCommand
  command.LoginCommand$LogStatus
-command/LogoutCommand.java
- command.LogoutCommand
- command.LogoutCommand$LogStatus
+model/SponsorshipStatus.java
+ model.SponsorshipStatus
 logging/Logger.java
  logging.Logger
 command/CancelEventCommand.java
  command.CancelEventCommand
-command/UpdateConsumerProfileCommand.java
- command.UpdateConsumerProfileCommand
+model/Event.java
+ model.Event
 model/EventType.java
  model.EventType
 state/SponsorshipState.java
  state.SponsorshipState
-command/UpdateProfileCommand.java
- command.UpdateProfileCommand
+command/ListEventBookingsCommand.java
+ command.ListEventBookingsCommand
 state/IUserState.java
  state.IUserState
 model/Booking.java
@@ -76,8 +75,9 @@ command/ListEventsCommand.java
  command.ListEventsCommand
 command/ListEventsOnGivenDateCommand.java
  command.ListEventsOnGivenDateCommand
-command/UpdateEntertainmentProviderProfileCommand.java
- command.UpdateEntertainmentProviderProfileCommand
+command/RegisterEntertainmentProviderCommand.java
+ command.RegisterEntertainmentProviderCommand
+ command.RegisterEntertainmentProviderCommand$LogStatus
 state/BookingState.java
  state.BookingState
 command/ListConsumerBookingsCommand.java
@@ -99,16 +99,16 @@ command/RegisterConsumerCommand.java
  command.RegisterConsumerCommand$LogStatus
 external/EntertainmentProviderSystem.java
  external.EntertainmentProviderSystem
-model/SponsorshipStatus.java
- model.SponsorshipStatus
-model/GovernmentRepresentative.java
- model.GovernmentRepresentative
-command/ListEventBookingsCommand.java
- command.ListEventBookingsCommand
-command/ICommand.java
- command.ICommand
-model/Event.java
- model.Event
-command/RegisterEntertainmentProviderCommand.java
- command.RegisterEntertainmentProviderCommand
- command.RegisterEntertainmentProviderCommand$LogStatus
+command/UpdateEntertainmentProviderProfileCommand.java
+ command.UpdateEntertainmentProviderProfileCommand
+command/UpdateConsumerProfileCommand.java
+ command.UpdateConsumerProfileCommand
+command/GovernmentReport1Command.java
+ command.GovernmentReport1Command
+command/UpdateProfileCommand.java
+ command.UpdateProfileCommand
+command/BookEventCommand.java
+ command.BookEventCommand
+command/LogoutCommand.java
+ command.LogoutCommand
+ command.LogoutCommand$LogStatus
