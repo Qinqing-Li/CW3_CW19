@@ -41,24 +41,28 @@ public class CancelBookingST {
     //event with booking number 2 is no longer active
     private final static long test4bookingNumber = 2;
 
+    @BeforeAll
+    public void registeringConsumer(){
+        controller = new Controller();
+        controller.runCommand(new RegisterConsumerCommand ("abc",
+                TESTEMAIL,
+                "07497111111",
+                TESTPASSWORD,
+                TESTEMAIL)
+        );
+
+        return controller.runCommand(new RegisterConsumerCommand.getResult());
+    }
+
     @BeforeEach
-    void loginConsumer(Controller controller, final TestInfo info){
+    void loginConsumer(final TestInfo info){
         final Set<String> testTags = info.getTags();
         if(testTags.stream().anyMatch(tag->tag.equals("skipBeforeEach"))){
             return;
         }else{
             controller.runCommand(new LoginCommand(TESTEMAIL,TESTPASSWORD));
         }
-    }
-
-    @BeforeEach
-    void printTestName(TestInfo testInfo) {
-        System.out.println(testInfo.getDisplayName());
-    }
-
-    @AfterEach
-    void logoutConsumer(Controller controller){
-        controller.runCommand(new LogoutCommand());
+        System.out.println(info.getDisplayName());
     }
 
     @AfterEach
