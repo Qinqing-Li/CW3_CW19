@@ -4,18 +4,25 @@ import logging.Logger;
 import model.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CreateEventST {
 
+    private static Controller controller;
+
     @BeforeEach
     void printTestName(TestInfo testInfo) {
         System.out.println(testInfo.getDisplayName());
+        controller = new Controller();
     }
 
     @AfterEach
@@ -24,46 +31,107 @@ public class CreateEventST {
         System.out.println("---");
     }
 
-    private static void create2Events(Controller controller) {
+    @Test
+    void createEventNotLoggedIn() {
 
-        loginEntertainmentProvider1(controller);
+        // try to create a non-ticketed event
+        try {
+            CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+                    "Music for everyone!",
+                    EventType.Music
+            );
+            controller.runCommand(eventCmd);
+            assertNull(eventCmd.getResult(),
+                    "Command should not have created a non-ticketed event as a user is not logged in," +
+                            " but one was created.");
+        } catch(Exception e) {
+            return;
+        }
 
-        CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
-                "Music for everyone!",
-                EventType.Music
-        );
-        controller.runCommand(eventCmd);
-        long eventNumber = eventCmd.getResult();
+    }
 
-        controller.runCommand(new AddEventPerformanceCommand(
-                eventNumber,
-                "Leith as usual",
-                LocalDateTime.of(2030, 3, 20, 4, 20),
-                LocalDateTime.of(2030, 3, 20, 6, 45),
-                List.of("The same musician"),
-                true,
-                true,
-                true,
-                Integer.MAX_VALUE,
-                Integer.MAX_VALUE
-        ));
-        controller.runCommand(new AddEventPerformanceCommand(
-                eventNumber,
-                "You know it",
-                LocalDateTime.of(2030, 3, 21, 4, 20),
-                LocalDateTime.of(2030, 3, 21, 7, 0),
-                List.of("The usual"),
-                true,
-                true,
-                true,
-                Integer.MAX_VALUE,
-                Integer.MAX_VALUE
-        ));
+    @Test
+    void createEventLoggedInAsConsumer() {
+        controller.runCommand(new RegisterConsumerCommand("Bob",
+                "bob@gmail.com",
+                "01234 567890",
+                "bobisawesome",
+                "bobpaypal@gmail.com"));
+        controller.runCommand(new LoginCommand("bob@gmail.com", "bobisawesome"));
 
-        create2Events(controller);
+        // try to create a non-ticketed event
+        try {
+            CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+                    "Music for everyone!",
+                    EventType.Music
+            );
+            controller.runCommand(eventCmd);
+            assertNull(eventCmd.getResult(),
+                    "Command should not have created a non-ticketed event as a consumer is logged in," +
+                            " but one was created.");
+        } catch(Exception e) {
+            return;
+        }
+    }
 
-        controller.runCommand(new LogoutCommand());
 
+    @Test
+    void createEventAsEntertainmentProvider() {
+
+        // login entertainment provider
+        controller.runCommand(new RegisterEntertainmentProviderCommand("Dance club",
+                "danceclub@gmail.com",
+                "dancepaypal@gmail.com",
+                "Sir Bruce Forsyth",
+                "bruce@gmail.com",
+                "seven777",
+                Collections.emptyList(),
+                Collections.emptyList()));
+        controller.runCommand(new LoginCommand("danceclub@gmail.com", "seven777"));
+
+        // create non-ticketed event
+        try {
+            CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+                    "Music for everyone!",
+                    EventType.Music
+            );
+            controller.runCommand(eventCmd);
+            assertNotNull(eventCmd.getResult(),
+                    "Command should have created a non-ticketed event but null was returned.");
+        } catch(Exception e) {
+            return;
+        }
+
+        // create ticketed event
+        try {
+            CreateTicketedEventCommand eventCmd2 = new CreateTicketedEventCommand(
+                    "Music for everyone 2!",
+                    EventType.Music,
+                    500,
+                    20,
+                    false
+            );
+            controller.runCommand(eventCmd2);
+
+            // test if successful
+            assertNotNull(eventCmd2.getResult(),
+                    "Command should have created a ticketed event but null was returned.");
+        } catch(Exception e) {
+            return;
+        }
+
+        // create event of same name
+        try {
+            CreateNonTicketedEventCommand eventCmd3 = new CreateNonTicketedEventCommand(
+                    "Music for everyone!",
+                    EventType.Music
+            );
+            controller.runCommand(eventCmd3);
+            assertNull(eventCmd3.getResult(),
+                    "Command should not have created a ticketed event with the same name but it was created.");
+        } catch(Exception e) {
+            return;
+        }
 
     }
 }

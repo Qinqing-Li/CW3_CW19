@@ -11,7 +11,6 @@ public abstract class UpdateProfileCommand implements ICommand {
         successResult = false;
     }
 
-    // TODO check why is newEmail provided? Do we need to change email here?
     protected boolean isProfileUpdateInvalid(Context context,
                                              String oldPassword,
                                              String newEmail) {

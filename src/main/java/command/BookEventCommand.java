@@ -24,6 +24,7 @@ public class BookEventCommand implements ICommand {
 
     @Override
     public void execute(Context context) {
+        result = null;
         // move this error message to a better class if suitable:
         assert context.getUserState().getCurrentUser() != null :
                 "Consumer is not logged in.";
@@ -66,6 +67,7 @@ public class BookEventCommand implements ICommand {
                 booker.getEmail(),
                 numTicketsRequested);
 
+        result = newBooking.getBookingNumber();
     }
 
     @Override

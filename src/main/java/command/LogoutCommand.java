@@ -9,7 +9,6 @@ public class LogoutCommand implements ICommand {
         USER_LOGOUT_NOT_LOGGED_IN
     }
 
-    // TODO related problems?
     public LogoutCommand(){
 
     }

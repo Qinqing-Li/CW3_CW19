@@ -1,10 +1,7 @@
 package command;
 
 import controller.Context;
-import model.Booking;
-import model.BookingStatus;
-import model.Event;
-import model.EventStatus;
+import model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +20,10 @@ public class GovernmentReport1Command implements ICommand {
     }
 
     public void execute(Context context) {
+
+        assert (context.getUserState().getCurrentUser() instanceof GovernmentRepresentative) :
+                "Current user must be a government representative.";
+
         List<Booking> bookings = new ArrayList<>();
 
         for (Event event : context.getEventState().getAllEvents()) {
