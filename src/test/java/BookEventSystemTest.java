@@ -388,3 +388,25 @@ public class BookEventSystemTest {
     }
 
 }
+
+    @Test
+    @DisplayName("testSuccessCase, booking was made")
+    public void testSuccessCase(){
+        BookEventCommand = new BookEventCommand(
+                successEventNumber,
+                successPerformanceNumber,
+                2
+        );
+        GetAvailablePerformanceTicketsCommand = new GetAvailablePerformanceTicketsCommand(
+                successEventNumber,
+                successPerformanceNumber
+        );
+        this.status = LogStatus.BOOK_EVENT_SUCCESS;
+
+        assertEquals(
+                2,
+                GetAvailablePerformanceTicketsCommand.getResult(),
+                "Result should be num.of tickets: 2");
+    }
+
+}
