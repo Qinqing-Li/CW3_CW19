@@ -46,18 +46,6 @@ public class GovernmentReport1SystemTest {
         controller.runCommand(new LoginCommand("i-will-kick-your@gmail.com", "it is wednesday my dudes"));
     }
 
-    private static void governmentAcceptAllSponsorships(Controller controller) {
-        ListSponsorshipRequestsCommand cmd = new ListSponsorshipRequestsCommand(true);
-        controller.runCommand(cmd);
-        List<SponsorshipRequest> requests = cmd.getResult();
-
-        for (SponsorshipRequest request : requests) {
-            controller.runCommand(new RespondSponsorshipCommand(
-                    request.getRequestNumber(), 25
-            ));
-        }
-    }
-
     private static void providerCancelFirstEvent(Controller controller) {
         ListEventsCommand cmd = new ListEventsCommand(true, true);
         controller.runCommand(cmd);
@@ -353,7 +341,6 @@ public class GovernmentReport1SystemTest {
         controller.runCommand(new LogoutCommand());
 
         loginGovernmentRepresentative(controller);
-        governmentAcceptAllSponsorships(controller);
         controller.runCommand(new LogoutCommand());
 
         loginConsumer1(controller);

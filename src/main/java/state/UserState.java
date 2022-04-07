@@ -3,7 +3,7 @@ package state;
 import model.GovernmentRepresentative;
 import model.User;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public class UserState implements IUserState, Cloneable {
     private List<GovernmentRepresentative> governmentRepresentatives;
 
     public UserState() {
-        this.users = Collections.emptyMap();
+        this.users = new HashMap<String, User>();
         this.currentUser = null;
         // add existing government representatives to the list of users (no registration)
         registerGovernmentRepresentatives();

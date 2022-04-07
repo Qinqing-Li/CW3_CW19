@@ -2,14 +2,14 @@ logging/LogEntry.java
  logging.LogEntry
 state/IEventState.java
  state.IEventState
-command/ICommand.java
- command.ICommand
+command/GovernmentReport1Command.java
+ command.GovernmentReport1Command
 controller/Controller.java
  controller.Controller
 state/ISponsorshipState.java
  state.ISponsorshipState
-model/GovernmentRepresentative.java
- model.GovernmentRepresentative
+command/BookEventCommand.java
+ command.BookEventCommand
 external/MockPaymentSystem.java
  external.MockPaymentSystem
 command/ListSponsorshipRequestsCommand.java
@@ -20,12 +20,13 @@ model/BookingStatus.java
  model.BookingStatus
 model/User.java
  model.User
-state/UserState.java
- state.UserState
+model/Event.java
+ model.Event
 model/EventPerformance.java
  model.EventPerformance
-controller/Context.java
- controller.Context
+command/RegisterEntertainmentProviderCommand.java
+ command.RegisterEntertainmentProviderCommand
+ command.RegisterEntertainmentProviderCommand$LogStatus
 external/MockEntertainmentProviderSystem.java
  external.MockEntertainmentProviderSystem
 command/CancelBookingCommand.java
@@ -37,20 +38,21 @@ model/EntertainmentProvider.java
 command/LoginCommand.java
  command.LoginCommand
  command.LoginCommand$LogStatus
-model/SponsorshipStatus.java
- model.SponsorshipStatus
+command/LogoutCommand.java
+ command.LogoutCommand
+ command.LogoutCommand$LogStatus
 logging/Logger.java
  logging.Logger
 command/CancelEventCommand.java
  command.CancelEventCommand
-model/Event.java
- model.Event
+command/UpdateConsumerProfileCommand.java
+ command.UpdateConsumerProfileCommand
 model/EventType.java
  model.EventType
 state/SponsorshipState.java
  state.SponsorshipState
-command/ListEventBookingsCommand.java
- command.ListEventBookingsCommand
+command/UpdateProfileCommand.java
+ command.UpdateProfileCommand
 state/IUserState.java
  state.IUserState
 model/Booking.java
@@ -75,9 +77,8 @@ command/ListEventsCommand.java
  command.ListEventsCommand
 command/ListEventsOnGivenDateCommand.java
  command.ListEventsOnGivenDateCommand
-command/RegisterEntertainmentProviderCommand.java
- command.RegisterEntertainmentProviderCommand
- command.RegisterEntertainmentProviderCommand$LogStatus
+command/UpdateEntertainmentProviderProfileCommand.java
+ command.UpdateEntertainmentProviderProfileCommand
 state/BookingState.java
  state.BookingState
 command/ListConsumerBookingsCommand.java
@@ -99,16 +100,15 @@ command/RegisterConsumerCommand.java
  command.RegisterConsumerCommand$LogStatus
 external/EntertainmentProviderSystem.java
  external.EntertainmentProviderSystem
-command/UpdateEntertainmentProviderProfileCommand.java
- command.UpdateEntertainmentProviderProfileCommand
-command/UpdateConsumerProfileCommand.java
- command.UpdateConsumerProfileCommand
-command/GovernmentReport1Command.java
- command.GovernmentReport1Command
-command/UpdateProfileCommand.java
- command.UpdateProfileCommand
-command/BookEventCommand.java
- command.BookEventCommand
-command/LogoutCommand.java
- command.LogoutCommand
- command.LogoutCommand$LogStatus
+model/SponsorshipStatus.java
+ model.SponsorshipStatus
+model/GovernmentRepresentative.java
+ model.GovernmentRepresentative
+command/ListEventBookingsCommand.java
+ command.ListEventBookingsCommand
+command/ICommand.java
+ command.ICommand
+controller/Context.java
+ controller.Context
+state/UserState.java
+ state.UserState
