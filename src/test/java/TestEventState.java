@@ -1,6 +1,7 @@
 import model.*;
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import state.EventState;
@@ -19,7 +20,7 @@ public class TestEventState {
     private EntertainmentProvider genericProvider;
     private EntertainmentProvider genericProvider2;
 
-    @Before
+    @BeforeAll
     @DisplayName("EventState tests")
     public void createInstance(){
         eventState = new EventState();

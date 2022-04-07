@@ -70,7 +70,7 @@ public class RequestBookingRecordsST {
         controller.runCommand(new LoginCommand("bob@gmail.com", "bobisawesome"));
 
         // book 2 events, cancel 1, & logout
-        BookEventCommand newBooking1 = new BookEventCommand(eventNumber, performanceNumber, 3)
+        BookEventCommand newBooking1 = new BookEventCommand(eventNumber, performanceNumber, 3);
         controller.runCommand(newBooking1);
         booking1 = newBooking1.getResult();
 
@@ -88,6 +88,7 @@ public class RequestBookingRecordsST {
     }
 
     @Test
+    @DisplayName("Test requesting booking records when not logged in as government user.")
     void testNotGovernmentUser() {
         try {
             GovernmentReport1Command reportCmd = new GovernmentReport1Command(
@@ -107,6 +108,7 @@ public class RequestBookingRecordsST {
     }
 
     @Test
+    @DisplayName("Test requesting booking records when logged in as government user.")
     void testGovernmentUser() {
         try {
             // login government representative
@@ -125,6 +127,27 @@ public class RequestBookingRecordsST {
                     (reportCmd.getResult().get(0).getBookingNumber() == booking2 &&
                             reportCmd.getResult().get(1).getBookingNumber() == booking1),
                     "The bookings provided should be the same as the ones put into the system but aren't.");
+
+        } catch(Exception e) {
+            return;
+        }
+    }
+
+    @Test
+    @DisplayName("Test requesting booking records outside time bounds of any bookings")
+    void testOutsideBounds() {
+        try {
+            // login government representative
+            controller.runCommand(new LoginCommand("Suzy", "wrui2fnk"));
+
+            GovernmentReport1Command reportCmd = new GovernmentReport1Command(
+                    LocalDateTime.of(2010, 3, 20, 4, 10),
+                    LocalDateTime.of(2010, 3, 20, 6, 50)
+            );
+            controller.runCommand(reportCmd);
+
+            assertEquals(reportCmd.getResult().size(), 0,
+                    "Report should return no bookings but " + reportCmd.getResult().size() + "are given.");
 
         } catch(Exception e) {
             return;
