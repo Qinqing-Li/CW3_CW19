@@ -19,13 +19,15 @@ public class MockEntertainmentProviderSystem implements EntertainmentProviderSys
     public MockEntertainmentProviderSystem(String orgName, String orgAddress){
         this.orgName = orgName;
         this.orgAddress = orgAddress;
-        this.eventTicketNumbers = Collections.emptyMap();
-        this.bookingNumbers = Collections.emptyMap();
+        this.eventTicketNumbers = new HashMap<>();
+        this.bookingNumbers = new HashMap<>();
     }
 
     @Override
     public void cancelBooking (long bookingNumber){
         // increase number of tickets available for event
+        System.out.println("Booking number: " + bookingNumber);
+        System.out.println("Booking list: " + bookingNumbers);
         long eventNum = bookingNumbers.get(bookingNumber).get(1);
         long newTicketsAvailable = eventTicketNumbers.get(eventNum) + bookingNumbers.get(bookingNumber).get(0);
         eventTicketNumbers.put(eventNum, (int) newTicketsAvailable);
@@ -53,7 +55,7 @@ public class MockEntertainmentProviderSystem implements EntertainmentProviderSys
         List<Long> newValuePair = new ArrayList<>();
         newValuePair.add((long) bookedTickets);
         newValuePair.add(eventNumber);
-        bookingNumbers.put(eventNumber, newValuePair);
+        bookingNumbers.put(bookingNumber, newValuePair);
 
         // decrease tickets available
         int newTicketsAvailable = (int) eventTicketNumbers.get(eventNumber) - bookedTickets;

@@ -67,6 +67,8 @@ public class BookEventCommand implements ICommand {
                 booker.getEmail(),
                 numTicketsRequested);
 
+        booker.addBooking(newBooking);
+
         result = newBooking.getBookingNumber();
     }
 

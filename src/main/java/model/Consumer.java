@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Consumer extends User {
@@ -13,6 +14,7 @@ public class Consumer extends User {
         super(email,password,paymentAccountEmail);
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.bookings = new ArrayList<>();
     }
 
     public void	addBooking (Booking booking){

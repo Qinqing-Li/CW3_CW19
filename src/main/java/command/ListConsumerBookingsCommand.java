@@ -20,6 +20,7 @@ public class ListConsumerBookingsCommand implements ICommand {
         assert context.getUserState().getCurrentUser() instanceof Consumer : "Logged in user must be a consumer.";
         Consumer currentConsumer = (Consumer) context.getUserState().getCurrentUser();
         result = currentConsumer.getBookings();
+        System.out.println("Bookings list command: " + result);
 
     }
 

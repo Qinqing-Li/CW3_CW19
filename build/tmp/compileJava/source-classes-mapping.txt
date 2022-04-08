@@ -68,6 +68,8 @@ external/PaymentSystem.java
  external.PaymentSystem
 command/GetAvailablePerformanceTicketsCommand.java
  command.GetAvailablePerformanceTicketsCommand
+external/Transaction.java
+ external.Transaction
 model/TicketedEvent.java
  model.TicketedEvent
 model/LogStatus.java

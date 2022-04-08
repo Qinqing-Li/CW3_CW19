@@ -33,6 +33,8 @@ public class CreateTicketedEventCommand extends CreateEventCommand {
                     ticketPrice,
                     numTickets);
 
+            thisProvider.addEvent(newEvent);
+
             this.eventNumberResult = newEvent.getEventNumber();
             thisProvider.getProviderSystem().recordNewEvent(newEvent.getEventNumber(), title, numTickets);
         }
