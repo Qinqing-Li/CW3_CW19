@@ -91,14 +91,15 @@ public class BookEventSystemTest {
     @BeforeAll
     public void registeringConsumer(){
         controller = new Controller();
-        controller.runCommand(new RegisterConsumerCommand ("abc",
+
+        RegisterConsumerCommand registerCmd = new RegisterConsumerCommand ("abc",
                 TESTEMAIL,
                 "07497111111",
                 TESTPASSWORD,
-                TESTEMAIL)
-        );
+                TESTEMAIL);
 
-        return controller.runCommand(new RegisterConsumerCommand.getResult());
+        controller.runCommand(registerCmd);
+
     }
 
 

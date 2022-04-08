@@ -20,13 +20,12 @@ model/BookingStatus.java
  model.BookingStatus
 model/User.java
  model.User
-model/Event.java
- model.Event
+state/UserState.java
+ state.UserState
 model/EventPerformance.java
  model.EventPerformance
-command/RegisterEntertainmentProviderCommand.java
- command.RegisterEntertainmentProviderCommand
- command.RegisterEntertainmentProviderCommand$LogStatus
+controller/Context.java
+ controller.Context
 external/MockEntertainmentProviderSystem.java
  external.MockEntertainmentProviderSystem
 command/CancelBookingCommand.java
@@ -59,12 +58,12 @@ model/Booking.java
  model.Booking
 model/SponsorshipRequest.java
  model.SponsorshipRequest
-command/AddEventPerformanceCommand.java
- command.AddEventPerformanceCommand
 command/CreateNonTicketedEventCommand.java
  command.CreateNonTicketedEventCommand
 model/NonTicketedEvent.java
  model.NonTicketedEvent
+command/AddEventPerformanceCommand.java
+ command.AddEventPerformanceCommand
 external/PaymentSystem.java
  external.PaymentSystem
 command/GetAvailablePerformanceTicketsCommand.java
@@ -106,9 +105,10 @@ model/GovernmentRepresentative.java
  model.GovernmentRepresentative
 command/ListEventBookingsCommand.java
  command.ListEventBookingsCommand
+model/Event.java
+ model.Event
 command/ICommand.java
  command.ICommand
-controller/Context.java
- controller.Context
-state/UserState.java
- state.UserState
+command/RegisterEntertainmentProviderCommand.java
+ command.RegisterEntertainmentProviderCommand
+ command.RegisterEntertainmentProviderCommand$LogStatus
