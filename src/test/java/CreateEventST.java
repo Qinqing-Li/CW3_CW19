@@ -29,19 +29,14 @@ public class CreateEventST {
     void createEventNotLoggedIn() {
 
         // try to create a non-ticketed event
-        try {
-            CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
-                    "Music for everyone!",
-                    EventType.Music
-            );
-            controller.runCommand(eventCmd);
-            assertNull(eventCmd.getResult(),
-                    "Command should not have created a non-ticketed event as a user is not logged in," +
-                            " but one was created.");
-        } catch(Exception e) {
-            return;
-        }
-
+        CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+                "Music for everyone!",
+                EventType.Music
+        );
+        controller.runCommand(eventCmd);
+        assertNull(eventCmd.getResult(),
+                "Command should not have created a non-ticketed event as a user is not logged in," +
+                        " but one was created.");
     }
 
     @Test
@@ -54,18 +49,14 @@ public class CreateEventST {
         controller.runCommand(new LoginCommand("bob@gmail.com", "bobisawesome"));
 
         // try to create a non-ticketed event
-        try {
-            CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
-                    "Music for everyone!",
-                    EventType.Music
-            );
-            controller.runCommand(eventCmd);
-            assertNull(eventCmd.getResult(),
-                    "Command should not have created a non-ticketed event as a consumer is logged in," +
-                            " but one was created.");
-        } catch(Exception e) {
-            return;
-        }
+        CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+                "Music for everyone!",
+                EventType.Music
+        );
+        controller.runCommand(eventCmd);
+        assertNull(eventCmd.getResult(),
+                "Command should not have created a non-ticketed event as a consumer is logged in," +
+                        " but one was created.");
     }
 
 
@@ -84,48 +75,38 @@ public class CreateEventST {
         controller.runCommand(new LoginCommand("bruce@gmail.com", "seven777"));
 
         // create non-ticketed event
-        try {
-            CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
-                    "Music for everyone!",
-                    EventType.Music
-            );
-            controller.runCommand(eventCmd);
-            assertNotNull(eventCmd.getResult(),
-                    "Command should have created a non-ticketed event but null was returned.");
-        } catch(Exception e) {
-            return;
-        }
+        CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+                "Music for everyone!",
+                EventType.Music
+        );
+        controller.runCommand(eventCmd);
+        assertNotNull(eventCmd.getResult(),
+                "Command should have created a non-ticketed event but null was returned.");
+
 
         // create ticketed event
-        try {
-            CreateTicketedEventCommand eventCmd2 = new CreateTicketedEventCommand(
-                    "Music for everyone 2!",
-                    EventType.Music,
-                    500,
-                    20,
-                    false
-            );
-            controller.runCommand(eventCmd2);
+        CreateTicketedEventCommand eventCmd2 = new CreateTicketedEventCommand(
+                "Music for everyone 2!",
+                EventType.Music,
+                500,
+                20,
+                false
+        );
+        controller.runCommand(eventCmd2);
 
-            // test if successful
-            assertNotNull(eventCmd2.getResult(),
-                    "Command should have created a ticketed event but null was returned.");
-        } catch(Exception e) {
-            return;
-        }
+        // test if successful
+        assertNotNull(eventCmd2.getResult(),
+                "Command should have created a ticketed event but null was returned.");
+
 
         // create event of same name
-        try {
-            CreateNonTicketedEventCommand eventCmd3 = new CreateNonTicketedEventCommand(
-                    "Music for everyone!",
-                    EventType.Music
-            );
-            controller.runCommand(eventCmd3);
-            assertNull(eventCmd3.getResult(),
-                    "Command should not have created a ticketed event with the same name but it was created.");
-        } catch(Exception e) {
-            return;
-        }
+        CreateNonTicketedEventCommand eventCmd3 = new CreateNonTicketedEventCommand(
+                "Music for everyone!",
+                EventType.Music
+        );
+        controller.runCommand(eventCmd3);
+        assertNull(eventCmd3.getResult(),
+                "Command should not have created a ticketed event with the same name but it was created.");
 
     }
 }

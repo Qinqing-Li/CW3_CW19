@@ -40,8 +40,9 @@ command/LoginCommand.java
 command/LogoutCommand.java
  command.LogoutCommand
  command.LogoutCommand$LogStatus
-logging/Logger.java
- logging.Logger
+command/RegisterEntertainmentProviderCommand.java
+ command.RegisterEntertainmentProviderCommand
+ command.RegisterEntertainmentProviderCommand$LogStatus
 command/CancelEventCommand.java
  command.CancelEventCommand
 command/UpdateConsumerProfileCommand.java
@@ -58,12 +59,12 @@ model/Booking.java
  model.Booking
 model/SponsorshipRequest.java
  model.SponsorshipRequest
+command/AddEventPerformanceCommand.java
+ command.AddEventPerformanceCommand
 command/CreateNonTicketedEventCommand.java
  command.CreateNonTicketedEventCommand
 model/NonTicketedEvent.java
  model.NonTicketedEvent
-command/AddEventPerformanceCommand.java
- command.AddEventPerformanceCommand
 external/PaymentSystem.java
  external.PaymentSystem
 command/GetAvailablePerformanceTicketsCommand.java
@@ -107,10 +108,9 @@ model/GovernmentRepresentative.java
  model.GovernmentRepresentative
 command/ListEventBookingsCommand.java
  command.ListEventBookingsCommand
-model/Event.java
- model.Event
 command/ICommand.java
  command.ICommand
-command/RegisterEntertainmentProviderCommand.java
- command.RegisterEntertainmentProviderCommand
- command.RegisterEntertainmentProviderCommand$LogStatus
+model/Event.java
+ model.Event
+logging/Logger.java
+ logging.Logger

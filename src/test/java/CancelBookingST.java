@@ -211,20 +211,16 @@ public class CancelBookingST {
     @Test
     @DisplayName("testSuccessCase, booking was made")
     public void testSuccessCase(){
-        try {
+        BookEventCommand bookCmd = new BookEventCommand(eventNumber, performanceNumber, 1);
+        controller.runCommand(bookCmd);
+        long bookingNumber3 = bookCmd.getResult();
 
-            BookEventCommand bookCmd = new BookEventCommand(eventNumber, performanceNumber, 1);
-            controller.runCommand(bookCmd);
-            long bookingNumber3 = bookCmd.getResult();
+        CancelBookingCommand cancelCmd = new CancelBookingCommand(bookingNumber3);
 
-            CancelBookingCommand cancelCmd = new CancelBookingCommand(bookingNumber3);
+        assertDoesNotThrow(() -> controller.runCommand(cancelCmd),
+                "Should not throw but throws.");
 
-            assertDoesNotThrow(() -> controller.runCommand(cancelCmd),
-                    "Should not throw but throws.");
+        assertEquals(true, cancelCmd.getResult(), "Result should be: true");
 
-            assertEquals(true, cancelCmd.getResult(), "Result should be: true");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 }

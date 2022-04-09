@@ -94,68 +94,55 @@ public class RequestBookingRecordsST {
     @Test
     @DisplayName("Test requesting booking records when not logged in as government user.")
     void testNotGovernmentUser() {
-        try {
-            GovernmentReport1Command reportCmd = new GovernmentReport1Command(
-                    LocalDateTime.of(2030, 3, 20, 4, 10),
-                    LocalDateTime.of(2030, 3, 20, 6, 50)
-            );
+        GovernmentReport1Command reportCmd = new GovernmentReport1Command(
+                LocalDateTime.of(2030, 3, 20, 4, 10),
+                LocalDateTime.of(2030, 3, 20, 6, 50)
+        );
 
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                controller.runCommand(reportCmd);
-            }, "An assertion error should be raised for wrong user password");
-            assertEquals("Current user must be a government representative.", expectedError.getMessage(),
-                    "Assertion error message should be the same, current user is not government representative.");
+        AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+            controller.runCommand(reportCmd);
+        }, "An assertion error should be raised for wrong user password");
+        assertEquals("Current user must be a government representative.", expectedError.getMessage(),
+                "Assertion error message should be the same, current user is not government representative.");
 
-        } catch(Exception e) {
-            return;
-        }
     }
 
     @Test
     @DisplayName("Test requesting booking records when logged in as government user.")
     void testGovernmentUser() {
-        try {
-            // login government representative
-            controller.runCommand(new LoginCommand("Suzy", "wrui2fnk"));
+        // login government representative
+        controller.runCommand(new LoginCommand("Suzy", "wrui2fnk"));
 
-            GovernmentReport1Command reportCmd = new GovernmentReport1Command(
-                    LocalDateTime.of(2030, 3, 20, 4, 10),
-                    LocalDateTime.of(2030, 3, 20, 6, 50)
-            );
-            controller.runCommand(reportCmd);
+        GovernmentReport1Command reportCmd = new GovernmentReport1Command(
+                LocalDateTime.of(2030, 3, 20, 4, 10),
+                LocalDateTime.of(2030, 3, 20, 6, 50)
+        );
+        controller.runCommand(reportCmd);
 
-            assertEquals(reportCmd.getResult().size(), 2,
-                    "Report should return two bookings but " + reportCmd.getResult().size() + "are given.");
-            assertTrue((reportCmd.getResult().get(0).getBookingNumber() == booking1 &&
-                    reportCmd.getResult().get(1).getBookingNumber() == booking2) ||
-                    (reportCmd.getResult().get(0).getBookingNumber() == booking2 &&
-                            reportCmd.getResult().get(1).getBookingNumber() == booking1),
-                    "The bookings provided should be the same as the ones put into the system but aren't.");
+        assertEquals(reportCmd.getResult().size(), 2,
+                "Report should return two bookings but " + reportCmd.getResult().size() + "are given.");
+        assertTrue((reportCmd.getResult().get(0).getBookingNumber() == booking1 &&
+                        reportCmd.getResult().get(1).getBookingNumber() == booking2) ||
+                        (reportCmd.getResult().get(0).getBookingNumber() == booking2 &&
+                                reportCmd.getResult().get(1).getBookingNumber() == booking1),
+                "The bookings provided should be the same as the ones put into the system but aren't.");
 
-        } catch(Exception e) {
-            return;
-        }
     }
 
     @Test
     @DisplayName("Test requesting booking records outside time bounds of any bookings")
     void testOutsideBounds() {
-        try {
-            // login government representative
-            controller.runCommand(new LoginCommand("Suzy", "wrui2fnk"));
+        // login government representative
+        controller.runCommand(new LoginCommand("Suzy", "wrui2fnk"));
 
-            GovernmentReport1Command reportCmd = new GovernmentReport1Command(
-                    LocalDateTime.of(2010, 3, 20, 4, 10),
-                    LocalDateTime.of(2010, 3, 20, 6, 50)
-            );
-            controller.runCommand(reportCmd);
+        GovernmentReport1Command reportCmd = new GovernmentReport1Command(
+                LocalDateTime.of(2010, 3, 20, 4, 10),
+                LocalDateTime.of(2010, 3, 20, 6, 50)
+        );
+        controller.runCommand(reportCmd);
 
-            assertEquals(reportCmd.getResult().size(), 0,
-                    "Report should return no bookings but " + reportCmd.getResult().size() + "are given.");
+        assertEquals(reportCmd.getResult().size(), 0,
+                "Report should return no bookings but " + reportCmd.getResult().size() + "are given.");
 
-        } catch(Exception e) {
-            return;
-        }
     }
-
 }

@@ -7,20 +7,19 @@ import java.util.Map;
 
 public class Logger {
     private static Logger logger_instance;
-    private List<LogEntry> logs;
+    private static List<LogEntry> logs;
 
     private Logger(){
-        logger_instance = new Logger();
-        logs = new ArrayList<>();
     }
 
     public void	clearLog(){
-        logger_instance.logs.clear();
+        logs.clear();
     }
 
     public static Logger getInstance(){
         if (logger_instance == null){
             logger_instance = new Logger();
+            logs = new ArrayList<>();
         }
         return logger_instance;
     }

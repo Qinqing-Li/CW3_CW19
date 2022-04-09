@@ -37,6 +37,12 @@ public class ConsumerRegisterST {
         controller = new Controller();;
     }
 
+    @AfterEach
+    void clearLogs() {
+        Logger.getInstance().clearLog();
+        System.out.println("---");
+    }
+
     @Test
     public void testName(){
         try{
@@ -49,67 +55,51 @@ public class ConsumerRegisterST {
             return;
         }
 
-        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
     public void testEmail(){
-        try{
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                controller.runCommand(new RegisterConsumerCommand(TESTNAME, null,
-                        TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL));
-            }, "An assertion error should be raised for invalid user email address");
-            assertEquals("Email cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
-        }catch(Exception e){
-            return;
-        }
+        AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+            controller.runCommand(new RegisterConsumerCommand(TESTNAME, null,
+                    TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL));
+        }, "An assertion error should be raised for invalid user email address");
+        assertEquals("Email cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
 
-        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
     public void testPhoneNumber(){
-        try{
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL,
-                        null, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL));
-            }, "An assertion error should be raised for invalid user phone number");
-            assertEquals("Phone number cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
-        }catch(Exception e){
-            return;
-        }
+        AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+            controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL,
+                    null, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL));
+        }, "An assertion error should be raised for invalid user phone number");
+        assertEquals("Phone number cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
 
-        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
     public void testPassword(){
-        try{
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL,
-                        TESTPHONENUMBER, null, TESTPAYMENTACCOUNTEMAIL));
-            }, "An assertion error should be raised for invalid user password");
-            assertEquals("Password cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
-        }catch(Exception e){
-            return;
-        }
+        AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+            controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL,
+                    TESTPHONENUMBER, null, TESTPAYMENTACCOUNTEMAIL));
+        }, "An assertion error should be raised for invalid user password");
+        assertEquals("Password cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
 
-        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
     public void testPaymentAccountEmail(){
-        try{
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL,
-                        TESTPHONENUMBER, TESTPASSWORD, null));
-            }, "An assertion error should be raised for invalid user payment account email");
-            assertEquals("Payment account email cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
-        }catch(Exception e){
-            return;
-        }
+        AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+            controller.runCommand(new RegisterConsumerCommand(TESTNAME, TESTEMAIL,
+                    TESTPHONENUMBER, TESTPASSWORD, null));
+        }, "An assertion error should be raised for invalid user payment account email");
+        assertEquals("Payment account email cannot be null.", expectedError.getMessage(), "Assertion error message should be the same");
 
-       //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -117,16 +107,13 @@ public class ConsumerRegisterST {
         RegisterConsumerCommand registerConsumerCommand = new RegisterConsumerCommand(TESTNAME, TESTEMAIL, TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL);
         controller.runCommand(registerConsumerCommand);
 
-        try{
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                controller.runCommand(registerConsumerCommand);
-            }, "An assertion error should be raised for duplicate keys of user email address");
-            assertEquals("Email already registered with another user.", expectedError.getMessage(), "Assertion error message should be the same");
-        }catch(Exception e){
-            return;
-        }
+        AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+            controller.runCommand(registerConsumerCommand);
+        }, "An assertion error should be raised for duplicate keys of user email address");
+        assertEquals("Email already registered with another user.",
+                expectedError.getMessage(), "Assertion error message should be the same");
 
-        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_EMAIL_ALREADY_REGISTERED);
+        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_EMAIL_ALREADY_REGISTERED);
     }
 
     @Test
@@ -136,19 +123,13 @@ public class ConsumerRegisterST {
         Map<String, User> expectedUsers = Collections.emptyMap();
         Consumer testConsumer = new Consumer(TESTNAME, TESTEMAIL, TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL);
 
-        try{
-            assertDoesNotThrow(() -> { controller.runCommand(registerConsumerCommand); }, "Correct input should not raise any errors");
+        assertDoesNotThrow(() -> { controller.runCommand(registerConsumerCommand); }, "Correct input should not raise any errors");
 
-            //controller.runCommand(registerConsumerCommand);
-            expectedUsers.put(testConsumer.getEmail(), testConsumer);
-            assertEquals(testConsumer, registerConsumerCommand.getResult(), "Result should be registered consumer in success scenario");
-        }catch(Exception e){
-            // no log result is created
-            return;
-        }
+        //controller.runCommand(registerConsumerCommand);
+        expectedUsers.put(testConsumer.getEmail(), testConsumer);
+        assertEquals(testConsumer, registerConsumerCommand.getResult(), "Result should be registered consumer in success scenario");
+
         // update success log status
-        //Logger.getInstance().logAction(makeBanner("test on success case"), RegisterConsumerCommand.LogStatus.REGISTER_CONSUMER_SUCCESS);
+        Logger.getInstance().logAction(makeBanner("test on success case"), RegisterConsumerCommand.LogStatus.REGISTER_CONSUMER_SUCCESS);
     }
-
-
 }

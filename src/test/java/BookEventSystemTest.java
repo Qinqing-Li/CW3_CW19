@@ -18,10 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BookEventSystemTest {
 
-
     private static Logger logger;
     private LogStatus status;
-    private Controller controller;
+    private static Controller controller;
     private static BookEventCommand BookEventCommand;
     private static CancelEventCommand CancelEventCommand;
     private static CreateNonTicketedEventCommand CreateNonTicketedEventCommand;
@@ -90,7 +89,7 @@ public class BookEventSystemTest {
     private final static long successPerformanceNumber = 3;
 
     @BeforeAll
-    public void registeringConsumer(){
+    public static void registeringConsumer(){
         controller = new Controller();
 
         RegisterConsumerCommand registerCmd = new RegisterConsumerCommand ("abc",
@@ -102,8 +101,6 @@ public class BookEventSystemTest {
         controller.runCommand(registerCmd);
 
     }
-
-
 
     @BeforeEach
     void loginConsumer(final TestInfo info){

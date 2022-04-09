@@ -5,7 +5,6 @@ import state.UserState;
 import model.Consumer;
 import model.EntertainmentProvider;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -18,7 +17,6 @@ public class TestUserState {
     private static GovernmentRepresentative randomRep1;
     private static GovernmentRepresentative randomRep2;
     private static GovernmentRepresentative randomRep3;
-    private static GovernmentRepresentative randomRep4;
 
     @BeforeEach
     void createInstance(TestInfo testInfo){
@@ -34,7 +32,7 @@ public class TestUserState {
                 "david@123.com");
         randomRep3 = new GovernmentRepresentative("hii", "waejrowj",
                 "hii@123.com");
-        randomRep4 = new GovernmentRepresentative("margaret.thatcher@gov.uk",
+        GovernmentRepresentative randomRep4 = new GovernmentRepresentative("margaret.thatcher@gov.uk",
                 "The Good times  ",
                 "margaret@123.com"
         );
@@ -44,6 +42,7 @@ public class TestUserState {
         expectedUsers.put(randomRep3.getEmail(), randomRep3);
         expectedUsers.put(randomRep4.getEmail(), randomRep4);
     }
+
 
     @Test
     void testInitialization(){
@@ -96,11 +95,13 @@ public class TestUserState {
                 "orgaddr",
                 "john@paymentaccount",
                 "john",
-                "john@gmail.com",
+                "johnqwreq@gmail.com",
                 "gibberish",
                 List.of("Unknown Actor", "Spy"),
                 List.of("unknown@gmail.com", "spy@gmail.com")
         );
+
+        System.out.println("expected ussers: " + expectedUsers);
 
         expectedUsers.put(ep1.getEmail(), ep1);
         expectedUsers.put(ep2.getEmail(), ep2);
@@ -108,9 +109,11 @@ public class TestUserState {
         userState.addUser(ep1);
         userState.addUser(ep2);
 
+        System.out.println(userState.getAllUsers());
+
         assertAll("Test add user with Consumer",
                 () -> assertEquals(6, userState.getAllUsers().size(),
-                        "There should be 5 users now with 3 government reps and 2 consumers"),
+                        "There should be 5 users now with 3 government reps and 2 entertainment providers"),
                 () -> assertSame(ep1, userState.getAllUsers().get(ep1.getEmail()),
                         "The entertainment provider1's details should be set into the user list"),
                 () -> assertSame(ep2, userState.getAllUsers().get(ep2.getEmail()),
