@@ -76,6 +76,7 @@ public class EventState implements IEventState, Cloneable {
                 capacityLimit,
                 venueSize);
         event.addPerformance(newPerformance);
+        performanceNumber++;
         return newPerformance;
     }
 

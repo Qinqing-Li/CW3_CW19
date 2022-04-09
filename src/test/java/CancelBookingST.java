@@ -128,8 +128,6 @@ public class CancelBookingST {
         bookingNumber = bookCmd.getResult();
         bookingNumber2 = bookCmd2.getResult();
 
-
-
         controller.runCommand(new LogoutCommand());
     }
 
@@ -204,14 +202,6 @@ public class CancelBookingST {
     public void testReturnError5(){
 
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-
-            //------------TEST-------------
-            System.out.println("booking number 2 before test: " + bookingNumber2);
-
-
-            controller.runCommand(new ListConsumerBookingsCommand());
-
-
             controller.runCommand(new CancelBookingCommand(bookingNumber2));
         });
         assertEquals("The booked performance start must be at least 24hrs away from now.", expectedError.getMessage(), "Assertion error message should be the same");
