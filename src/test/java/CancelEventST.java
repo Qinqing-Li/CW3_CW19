@@ -25,19 +25,22 @@ public class CancelEventST {
         controller = new Controller();
         // login entertainment provider
         controller.runCommand(new RegisterEntertainmentProviderCommand("Dance club",
-                "danceclub@gmail.com",
+                "7 Dance Road",
                 "dancepaypal@gmail.com",
                 "Sir Bruce Forsyth",
                 "bruce@gmail.com",
                 "seven777",
                 Collections.emptyList(),
                 Collections.emptyList()));
-        controller.runCommand(new LoginCommand("danceclub@gmail.com", "seven777"));
+        controller.runCommand(new LoginCommand("bruce@gmail.com", "seven777"));
 
         // create event
-        CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+        CreateTicketedEventCommand eventCmd = new CreateTicketedEventCommand(
                 "Music for everyone!",
-                EventType.Music
+                EventType.Music,
+                300,
+                20,
+                false
         );
         controller.runCommand(eventCmd);
         eventNumber = eventCmd.getResult();
@@ -97,20 +100,26 @@ public class CancelEventST {
     }
 
     @Test
+    @DisplayName("Cancelling a message without providing a message from provider.")
     void cancelEventWithoutMessage() {
         try {
             CancelEventCommand cancelEventNullMsgCmd = new CancelEventCommand(eventNumber, null);
             CancelEventCommand cancelEventEmptyMsgCmd = new CancelEventCommand(eventNumber, "");
 
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
+
+            assertThrows(AssertionError.class, () -> {
                 controller.runCommand(cancelEventNullMsgCmd);
-            }, "An assertion error should be raised for wrong user password");
-            assertEquals("Organiser message must not be blank.", expectedError.getMessage(),
-                    "Assertion error message should be the same, that message is empty.");
+            }, "An assertion error should be raised for null message");
+
+            assertThrows(AssertionError.class, () -> {
+                controller.runCommand(cancelEventEmptyMsgCmd);
+            }, "An assertion error should be raised for empty message");
+
 
         } catch(Exception e) {
-            return;
+            System.out.println(e);
         }
+        System.out.println("End of test.");
 
     }
 
