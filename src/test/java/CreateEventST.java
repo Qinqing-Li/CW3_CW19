@@ -25,12 +25,6 @@ public class CreateEventST {
         controller = new Controller();
     }
 
-    @AfterEach
-    void clearLogs() {
-        Logger.getInstance().clearLog();
-        System.out.println("---");
-    }
-
     @Test
     void createEventNotLoggedIn() {
 
@@ -80,14 +74,14 @@ public class CreateEventST {
 
         // login entertainment provider
         controller.runCommand(new RegisterEntertainmentProviderCommand("Dance club",
-                "danceclub@gmail.com",
+                "7 Dance Road",
                 "dancepaypal@gmail.com",
                 "Sir Bruce Forsyth",
                 "bruce@gmail.com",
                 "seven777",
                 Collections.emptyList(),
                 Collections.emptyList()));
-        controller.runCommand(new LoginCommand("danceclub@gmail.com", "seven777"));
+        controller.runCommand(new LoginCommand("bruce@gmail.com", "seven777"));
 
         // create non-ticketed event
         try {

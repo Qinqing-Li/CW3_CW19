@@ -77,11 +77,6 @@ public class CancelEventST {
         controller.runCommand(new LogoutCommand());
     }
 
-    @AfterEach
-    void clearLogs() {
-        Logger.getInstance().clearLog();
-        System.out.println("---");
-    }
 
     @Test
     void cancelEventProviderNotLoggedIn() {
@@ -127,6 +122,9 @@ public class CancelEventST {
     @Test
     void cancelNonExistingEvent() {
         try {
+            // login event provider
+            controller.runCommand(new LoginCommand("bruce@gmail.com", "seven777"));
+
             CancelEventCommand cancelEventCmd = new CancelEventCommand(500, "Sorry!");
 
             AssertionError expectedError = assertThrows(AssertionError.class, () -> {
@@ -145,7 +143,7 @@ public class CancelEventST {
     void cancelEventProviderLoggedIn() {
         try {
             // login event provider
-            controller.runCommand(new LoginCommand("danceclub@gmail.com", "seven777"));
+            controller.runCommand(new LoginCommand("bruce@gmail.com", "seven777"));
 
             CancelEventCommand cancelEventCmd = new CancelEventCommand(eventNumber, "Sorry!");
             controller.runCommand(cancelEventCmd);

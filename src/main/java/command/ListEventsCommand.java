@@ -44,10 +44,8 @@ public class ListEventsCommand implements ICommand {
                     if (satisfied) { result.add(event); }
                 }
             }
-            if (!added && activeEventsOnly) {
-                for (Event e : context.getEventState().getAllEvents()) {
-                    if (e.getStatus() == ACTIVE) {result.add(e); }
-                }
+            if (!added && (!activeEventsOnly || event.getStatus() == ACTIVE)) {
+                    result.add(event);
             }
         }
     }

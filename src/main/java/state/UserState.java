@@ -49,10 +49,15 @@ public class UserState implements IUserState, Cloneable {
                 "david@123.com");
         GovernmentRepresentative randomRep3 = new GovernmentRepresentative("hii", "waejrowj",
                 "hii@123.com");
+        GovernmentRepresentative randomRep4 = new GovernmentRepresentative("margaret.thatcher@gov.uk",
+                "The Good times  ",
+                "margaret@123.com"
+                );
 
         users.put(randomRep1.getEmail(), randomRep1);
         users.put(randomRep2.getEmail(), randomRep2);
         users.put(randomRep3.getEmail(), randomRep3);
+        users.put(randomRep4.getEmail(), randomRep4);
     }
 
     @Override

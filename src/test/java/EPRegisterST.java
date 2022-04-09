@@ -35,12 +35,13 @@ public class EPRegisterST {
         controller = new Controller();
     }
 
+    /*
     @AfterEach
     void clearLogs() {
         Logger.getInstance().clearLog();
         System.out.println("---");
 
-    }
+    } */
 
     private String makeBanner(String testcaseName){
         return "##########################\n" +
@@ -60,7 +61,7 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null org name"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null org name"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -75,7 +76,7 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null org address"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null org address"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -90,7 +91,7 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null org payment account email"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null org payment account email"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -106,8 +107,8 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null org main rep name"),
-                RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null org main rep name"),
+        //        RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -123,8 +124,8 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null org main rep email"),
-                RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null org main rep email"),
+        //        RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -139,7 +140,7 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null password"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null password"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -154,7 +155,7 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null org other rep names"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null org other rep names"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -169,7 +170,7 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on null org other rep emails"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on null org other rep emails"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -189,7 +190,7 @@ public class EPRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_EMAIL_ALREADY_REGISTERED);
+        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterEntertainmentProviderCommand.LogStatus.USER_REGISTER_EMAIL_ALREADY_REGISTERED);
     }
 
     @Test
@@ -202,7 +203,7 @@ public class EPRegisterST {
             assertDoesNotThrow(() -> {
                 controller.runCommand(registerEntertainmentProviderCommand); }, "Correct input should not raise any errors");
 
-            controller.runCommand(registerEntertainmentProviderCommand);
+            //controller.runCommand(registerEntertainmentProviderCommand);
             EntertainmentProvider entertainmentProvider = new EntertainmentProvider(TESTORGNAME,
                     TESTORGADDRESS, TESTPAYMENTACCOUNTEMAIL, TESTMAINREPNAME,
                     TESTMAINREPEMAIL, TESTPASSWORD, TESTOTHERREPNAMES, TESTOTHERREPEMAILS);
@@ -216,6 +217,6 @@ public class EPRegisterST {
             return;
         }
         // update success log status
-        Logger.getInstance().logAction(makeBanner("test on success case"), RegisterEntertainmentProviderCommand.LogStatus.REGISTER_ENTERTAINMENT_PROVIDER_SUCCESS);
+        //Logger.getInstance().logAction(makeBanner("test on success case"), RegisterEntertainmentProviderCommand.LogStatus.REGISTER_ENTERTAINMENT_PROVIDER_SUCCESS);
     }
 }

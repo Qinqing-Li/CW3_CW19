@@ -49,7 +49,7 @@ public class ConsumerRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ConsumerRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ConsumerRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ConsumerRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ConsumerRegisterST {
             return;
         }
 
-       Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
+       //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_FIELDS_CANNOT_BE_NULL);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ConsumerRegisterST {
             return;
         }
 
-        Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_EMAIL_ALREADY_REGISTERED);
+        //Logger.getInstance().logAction(makeBanner("test on duplicate emails"), RegisterConsumerCommand.LogStatus.USER_REGISTER_EMAIL_ALREADY_REGISTERED);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class ConsumerRegisterST {
         try{
             assertDoesNotThrow(() -> { controller.runCommand(registerConsumerCommand); }, "Correct input should not raise any errors");
 
-            controller.runCommand(registerConsumerCommand);
+            //controller.runCommand(registerConsumerCommand);
             expectedUsers.put(testConsumer.getEmail(), testConsumer);
             assertEquals(testConsumer, registerConsumerCommand.getResult(), "Result should be registered consumer in success scenario");
         }catch(Exception e){
@@ -147,12 +147,8 @@ public class ConsumerRegisterST {
             return;
         }
         // update success log status
-        Logger.getInstance().logAction(makeBanner("test on success case"), RegisterConsumerCommand.LogStatus.REGISTER_CONSUMER_SUCCESS);
+        //Logger.getInstance().logAction(makeBanner("test on success case"), RegisterConsumerCommand.LogStatus.REGISTER_CONSUMER_SUCCESS);
     }
 
-    @AfterEach
-    void clearLog(){
-        Logger.getInstance().clearLog();
-        System.out.println("---");
-    }
+
 }

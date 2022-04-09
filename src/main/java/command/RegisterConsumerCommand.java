@@ -46,6 +46,8 @@ public class RegisterConsumerCommand implements ICommand {
         Consumer newUser = new Consumer(name, email, phoneNumber, password, paymentAccountEmail);
         context.getUserState().addUser(newUser);
         result = newUser;
+
+        context.getUserState().setCurrentUser(newUser);
     }
 
     @Override

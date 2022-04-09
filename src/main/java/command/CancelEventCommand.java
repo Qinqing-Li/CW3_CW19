@@ -60,6 +60,8 @@ public class CancelEventCommand implements ICommand {
             booking.getBooker().notify(organiserMessage);
         }
 
+        context.getEventState().findEventByNumber(eventNumber).cancel();
+
         EntertainmentProviderSystem providerSystem = entertainmentProvider.getProviderSystem();
         providerSystem.cancelEvent(event.getEventNumber(), organiserMessage);
 

@@ -1,5 +1,6 @@
 import command.*;
 import controller.Controller;
+import jdk.swing.interop.SwingInterOpUtils;
 import logging.Logger;
 import model.*;
 import org.junit.jupiter.api.AfterEach;
@@ -20,11 +21,12 @@ public class GovernmentReport1SystemTest {
         System.out.println(testInfo.getDisplayName());
     }
 
+    /*
     @AfterEach
     void clearLogs() {
         Logger.getInstance().clearLog();
         System.out.println("---");
-    }
+    } */
 
     private static void loginGovernmentRepresentative(Controller controller) {
         controller.runCommand(new LoginCommand("margaret.thatcher@gov.uk", "The Good times  "));
@@ -114,6 +116,8 @@ public class GovernmentReport1SystemTest {
                 Collections.emptyList()
         ));
 
+        controller.runCommand(new LoginCommand("busk@every.day", "When they say 'you can't do this': Ding Dong! You are wrong!"));
+
         CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
                 "Music for everyone!",
                 EventType.Music
@@ -160,6 +164,8 @@ public class GovernmentReport1SystemTest {
                 List.of("Dr Strangelove"),
                 List.of("we_dont_get_involved@cineworld.com")
         ));
+
+        controller.runCommand(new LoginCommand("odeon@cineworld.com", "F!ghT th3 R@Pture"));
 
         CreateTicketedEventCommand eventCmd1 = new CreateTicketedEventCommand(
                 "The LEGO Movie",
@@ -238,6 +244,7 @@ public class GovernmentReport1SystemTest {
                 List.of("Unknown Actor", "Spy"),
                 List.of("unknown@gmail.com", "spy@gmail.com")
         ));
+        controller.runCommand(new LoginCommand("anonymous@gmail.com", "anonymous"));
 
         CreateTicketedEventCommand eventCmd1 = new CreateTicketedEventCommand(
                 "London Summer Olympics",
@@ -264,8 +271,8 @@ public class GovernmentReport1SystemTest {
         controller.runCommand(new AddEventPerformanceCommand(
                 eventNumber1,
                 "Swimming arena",
-                LocalDateTime.now().plusMonths(1),
                 LocalDateTime.now().plusHours(8),
+                LocalDateTime.now().plusMonths(1),
                 List.of("Everyone in swimming"),
                 true,
                 true,
@@ -356,16 +363,33 @@ public class GovernmentReport1SystemTest {
         providerCancelFirstEvent(controller);
         controller.runCommand(new LogoutCommand());
 
+        /*/----TEST----
         loginGovernmentRepresentative(controller);
 
-        LocalDateTime start = LocalDateTime.now().minusWeeks(2);
-        LocalDateTime end = LocalDateTime.now().plusYears(1);
+        ListEventsCommand listEvents = new ListEventsCommand(false, false);
+        controller.runCommand(listEvents);
+        System.out.println("Events: " + listEvents.getResult());
+
+        LocalDateTime start = LocalDateTime.now().minusYears(2000);
+        LocalDateTime end = LocalDateTime.now().plusYears(2000);
+        GovernmentReport1Command cmd = new GovernmentReport1Command(start, end);
+        controller.runCommand(cmd);
+        List<Booking> bookings = cmd.getResult();
+        System.out.println("Bookings: " + bookings.get(0).getStatus());
+        *///------------
+
+        loginGovernmentRepresentative(controller);
+
+        LocalDateTime start = LocalDateTime.now().minusYears(2000);
+        LocalDateTime end = LocalDateTime.now().plusYears(2000);
         GovernmentReport1Command cmd = new GovernmentReport1Command(start, end);
         controller.runCommand(cmd);
         List<Booking> bookings = cmd.getResult();
 
-        assertEquals(1, bookings.size());
-        assertEquals("Wednesday Kebede", bookings.get(0).getBooker().getName());
-        assertEquals("Frozen Ballet", bookings.get(0).getEventPerformance().getEvent().getTitle());
+        assertEquals(2, bookings.size());
+        assertEquals("Jane Giantsdottir", bookings.get(0).getBooker().getName());
+        assertEquals("Winter Olympics", bookings.get(0).getEventPerformance().getEvent().getTitle());
+
+
     }
 }

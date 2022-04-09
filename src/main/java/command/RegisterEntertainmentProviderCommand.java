@@ -55,7 +55,7 @@ public class RegisterEntertainmentProviderCommand implements ICommand {
         assert mainRepName != null : "Main representative name cannot be null.";
         assert password != null : "Password cannot be null.";
         assert otherRepNames != null : "Other representatives' names cannot be null.";
-        assert otherRepEmails != null : "Other representatives' emails cannot be null";
+        assert otherRepEmails != null : "Other representatives' emails cannot be null.";
 
         Map<String, User> existingUsers = context.getUserState().getAllUsers();
         assert !existingUsers.containsKey(mainRepEmail) : "Main representative email already taken.";
@@ -85,6 +85,7 @@ public class RegisterEntertainmentProviderCommand implements ICommand {
         );
 
         context.getUserState().addUser(newEntertainmentProvider);
+        context.getUserState().setCurrentUser(newEntertainmentProvider);
         result = newEntertainmentProvider;
     }
 
