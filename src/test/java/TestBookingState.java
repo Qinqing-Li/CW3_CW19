@@ -1,8 +1,5 @@
 import model.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import state.BookingState;
 import state.EventState;
@@ -15,6 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestBookingState {
 
     private BookingState bookingState;
@@ -80,8 +78,8 @@ public class TestBookingState {
     @DisplayName("testfindBookingByNumber2, non-existing booking number should return null")
     void testFindBookingByNumber2(){
         try {
-        assertNull(bookingState.findBookingByNumber(2),
-                "Returned booking should be the same as one created.");
+        assertNull(bookingState.findBookingByNumber(1000),
+                "Returned booking should be null but isn't.");
         } catch(Exception e) {
             return;
         }
@@ -92,7 +90,7 @@ public class TestBookingState {
     void testFindBookingsByEventNumber(){
         try {
         List<Booking> bookings = bookingState.findBookingsByEventNumber(1);
-        assertSame(bookings.get(1), testBooking,
+        assertSame(bookings.get(0), testBooking,
                 "Returned item from booking list is not the same as one created.");
         } catch(Exception e) {
             return;

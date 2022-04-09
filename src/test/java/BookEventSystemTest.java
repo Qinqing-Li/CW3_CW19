@@ -5,6 +5,7 @@ import logging.Logger;
 import model.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.List;
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BookEventSystemTest {
 
 
@@ -116,12 +117,12 @@ public class BookEventSystemTest {
         System.out.println(info.getDisplayName());
     }
 
-
+    /*
     @AfterEach
     void clearLogs() {
         Logger.getInstance().clearLog();
         System.out.println("---");
-    }
+    } */
 
 
 
@@ -387,6 +388,8 @@ public class BookEventSystemTest {
                 successEventNumber,
                 successPerformanceNumber
         );
+        controller.runCommand(BookEventCommand);
+        controller.runCommand(GetAvailablePerformanceTicketsCommand);
         this.status = LogStatus.BOOK_EVENT_SUCCESS;
 
         assertEquals(

@@ -18,6 +18,7 @@ public class TestUserState {
     private static GovernmentRepresentative randomRep1;
     private static GovernmentRepresentative randomRep2;
     private static GovernmentRepresentative randomRep3;
+    private static GovernmentRepresentative randomRep4;
 
     @BeforeEach
     void createInstance(TestInfo testInfo){
@@ -33,16 +34,21 @@ public class TestUserState {
                 "david@123.com");
         randomRep3 = new GovernmentRepresentative("hii", "waejrowj",
                 "hii@123.com");
+        randomRep4 = new GovernmentRepresentative("margaret.thatcher@gov.uk",
+                "The Good times  ",
+                "margaret@123.com"
+        );
 
         expectedUsers.put(randomRep1.getEmail(), randomRep1);
         expectedUsers.put(randomRep2.getEmail(), randomRep2);
         expectedUsers.put(randomRep3.getEmail(), randomRep3);
+        expectedUsers.put(randomRep4.getEmail(), randomRep4);
     }
 
     @Test
     void testInitialization(){
         assertAll("Test UserState initialization",
-                () -> assertEquals(3, userState.getAllUsers().size(),
+                () -> assertEquals(4, userState.getAllUsers().size(),
                         "The users upon initialize should have 3 fixed government representatives accounts"),
                 () -> assertNull( userState.getCurrentUser(),
                 "The user upon initialization should be null"));
@@ -62,7 +68,7 @@ public class TestUserState {
         userState.addUser(consumer2);
 
         assertAll("Test add user with Consumer",
-                () -> assertEquals(5, userState.getAllUsers().size(),
+                () -> assertEquals(6, userState.getAllUsers().size(),
                         "There should be 5 users now with 3 government reps and 2 consumers"),
                 () -> assertSame(consumer1, userState.getAllUsers().get(consumer1.getEmail()),
                         "The consumer1 details should be set into the user list"),
@@ -103,7 +109,7 @@ public class TestUserState {
         userState.addUser(ep2);
 
         assertAll("Test add user with Consumer",
-                () -> assertEquals(5, userState.getAllUsers().size(),
+                () -> assertEquals(6, userState.getAllUsers().size(),
                         "There should be 5 users now with 3 government reps and 2 consumers"),
                 () -> assertSame(ep1, userState.getAllUsers().get(ep1.getEmail()),
                         "The entertainment provider1's details should be set into the user list"),

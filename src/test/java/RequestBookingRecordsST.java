@@ -32,12 +32,15 @@ public class RequestBookingRecordsST {
                 "seven777",
                 Collections.emptyList(),
                 Collections.emptyList()));
-        controller.runCommand(new LoginCommand("danceclub@gmail.com", "seven777"));
+        controller.runCommand(new LoginCommand("bruce@gmail.com", "seven777"));
 
         // create event
-        CreateNonTicketedEventCommand eventCmd = new CreateNonTicketedEventCommand(
+        CreateTicketedEventCommand eventCmd = new CreateTicketedEventCommand(
                 "Music for everyone!",
-                EventType.Music
+                EventType.Music,
+                300,
+                20,
+                false
         );
         controller.runCommand(eventCmd);
         eventNumber = eventCmd.getResult();
@@ -81,11 +84,12 @@ public class RequestBookingRecordsST {
         controller.runCommand(new LogoutCommand());
     }
 
+    /*
     @AfterEach
     void clearLogs() {
         Logger.getInstance().clearLog();
         System.out.println("---");
-    }
+    } */
 
     @Test
     @DisplayName("Test requesting booking records when not logged in as government user.")

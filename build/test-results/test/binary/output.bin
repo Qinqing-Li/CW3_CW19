@@ -1,3 +1,9 @@
-testWrongPassword()
-testSuccess()
-testOnNonExistedUser()
+#testSuccessCase, booking was made
+AtestReturnError3, Error: event with given number does not exist
+<testReturnError4, Error: only ticketed event can be booked
+TtestReturnError5, Error: this event has been cancelled and can no longer be booked
+=testReturnError6, Error: invalid number of tickers provided
+	6testReturnError7, Error: the payment is unsuccessful
+
+8testReturnError8, Error: performance has already ended
+8testReturnError9, Error: performance has already ended
