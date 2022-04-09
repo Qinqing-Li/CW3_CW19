@@ -1,9 +1,6 @@
 import model.*;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import state.EventState;
 
 import java.time.LocalDateTime;
@@ -21,13 +18,13 @@ public class TestEventState {
     private static EntertainmentProvider genericProvider2;
 
     @BeforeAll
-    @DisplayName("EventState tests")
-    public static void createInstance(){
+    static void createInstance(){
         eventState = new EventState();
     }
 
     @Test
     void testInitialization(){
+        eventState = new EventState();
         assertAll(
                 () -> assertEquals(new ArrayList<>(), eventState.getAllEvents(),
                         "Initial event list should be empty."),

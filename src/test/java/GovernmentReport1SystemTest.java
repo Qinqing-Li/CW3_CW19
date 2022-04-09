@@ -21,12 +21,11 @@ public class GovernmentReport1SystemTest {
         System.out.println(testInfo.getDisplayName());
     }
 
-    /*
     @AfterEach
     void clearLogs() {
         Logger.getInstance().clearLog();
         System.out.println("---");
-    } */
+    }
 
     private static void loginGovernmentRepresentative(Controller controller) {
         controller.runCommand(new LoginCommand("margaret.thatcher@gov.uk", "The Good times  "));

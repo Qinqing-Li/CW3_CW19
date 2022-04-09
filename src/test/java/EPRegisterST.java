@@ -3,6 +3,7 @@ import logging.Logger;
 import controller.Controller;
 import command.RegisterEntertainmentProviderCommand;
 
+import model.Consumer;
 import model.EntertainmentProvider;
 import model.User;
 import org.junit.jupiter.api.AfterEach;
@@ -11,10 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -165,15 +163,24 @@ public class EPRegisterST {
         assertDoesNotThrow(() -> {
             controller.runCommand(registerEntertainmentProviderCommand); }, "Correct input should not raise any errors");
 
-        //controller.runCommand(registerEntertainmentProviderCommand);
         EntertainmentProvider entertainmentProvider = new EntertainmentProvider(TESTORGNAME,
                 TESTORGADDRESS, TESTPAYMENTACCOUNTEMAIL, TESTMAINREPNAME,
                 TESTMAINREPEMAIL, TESTPASSWORD, TESTOTHERREPNAMES, TESTOTHERREPEMAILS);
-        Map<String, User> expectedEPs = Collections.emptyMap();
+        Map<String, User> expectedEPs = new HashMap<>();
         expectedEPs.put(entertainmentProvider.getEmail(), entertainmentProvider);
 
-        assertEquals(expectedEPs, registerEntertainmentProviderCommand.getResult(),
-                "Result should be registered consumer in success scenario");
+        EntertainmentProvider actualUser = (EntertainmentProvider) registerEntertainmentProviderCommand.getResult();
+        assertAll(() -> assertEquals(entertainmentProvider.getEmail(), actualUser.getEmail(),
+                        "Result email should be registered consumer email in success scenario"),
+                () -> assertEquals(entertainmentProvider.getEvents(), actualUser.getEvents(),
+                        "Result name should be registered consumer name in success scenario"),
+                () -> assertEquals(entertainmentProvider.getPaymentAccountEmail(), actualUser.getPaymentAccountEmail(),
+                        "Result payment account email should be registered consumer's payment account email in success scenario"),
+                () -> assertEquals(entertainmentProvider.getOrgAddress(), actualUser.getOrgAddress(),
+                        "Result list of bookings should be registered consumer's bookings in success scenario"),
+                () -> assertEquals(entertainmentProvider.getOrgName(), actualUser.getOrgName(),
+                        "Result list of bookings should be registered consumer's bookings in success scenario")
+        );
 
         // update success log status
         Logger.getInstance().logAction(makeBanner("test on success case"), RegisterEntertainmentProviderCommand.LogStatus.REGISTER_ENTERTAINMENT_PROVIDER_SUCCESS);

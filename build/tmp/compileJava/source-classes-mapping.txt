@@ -40,9 +40,8 @@ command/LoginCommand.java
 command/LogoutCommand.java
  command.LogoutCommand
  command.LogoutCommand$LogStatus
-command/RegisterEntertainmentProviderCommand.java
- command.RegisterEntertainmentProviderCommand
- command.RegisterEntertainmentProviderCommand$LogStatus
+logging/Logger.java
+ logging.Logger
 command/CancelEventCommand.java
  command.CancelEventCommand
 command/UpdateConsumerProfileCommand.java
@@ -112,5 +111,6 @@ command/ICommand.java
  command.ICommand
 model/Event.java
  model.Event
-logging/Logger.java
- logging.Logger
+command/RegisterEntertainmentProviderCommand.java
+ command.RegisterEntertainmentProviderCommand
+ command.RegisterEntertainmentProviderCommand$LogStatus

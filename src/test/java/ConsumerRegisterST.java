@@ -5,16 +5,15 @@ import model.User;
 import logging.Logger;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ConsumerRegisterST {
 
@@ -120,14 +119,24 @@ public class ConsumerRegisterST {
     public void testSuccess(){
         RegisterConsumerCommand registerConsumerCommand = new RegisterConsumerCommand(TESTNAME,
                 TESTEMAIL, TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL);
-        Map<String, User> expectedUsers = Collections.emptyMap();
+        Map<String, User> expectedUsers = new HashMap<>();
         Consumer testConsumer = new Consumer(TESTNAME, TESTEMAIL, TESTPHONENUMBER, TESTPASSWORD, TESTPAYMENTACCOUNTEMAIL);
 
         assertDoesNotThrow(() -> { controller.runCommand(registerConsumerCommand); }, "Correct input should not raise any errors");
 
         //controller.runCommand(registerConsumerCommand);
         expectedUsers.put(testConsumer.getEmail(), testConsumer);
-        assertEquals(testConsumer, registerConsumerCommand.getResult(), "Result should be registered consumer in success scenario");
+
+        Consumer actualUser = (Consumer) registerConsumerCommand.getResult();
+        assertAll(() -> assertEquals(testConsumer.getEmail(), actualUser.getEmail(),
+                "Result email should be registered consumer email in success scenario"),
+                () -> assertEquals(testConsumer.getName(), actualUser.getName(),
+                        "Result name should be registered consumer name in success scenario"),
+                () -> assertEquals(testConsumer.getPaymentAccountEmail(), actualUser.getPaymentAccountEmail(),
+                        "Result payment account email should be registered consumer's payment account email in success scenario"),
+                () -> assertEquals(testConsumer.getBookings(), actualUser.getBookings(),
+                        "Result list of bookings should be registered consumer's bookings in success scenario")
+        );
 
         // update success log status
         Logger.getInstance().logAction(makeBanner("test on success case"), RegisterConsumerCommand.LogStatus.REGISTER_CONSUMER_SUCCESS);
