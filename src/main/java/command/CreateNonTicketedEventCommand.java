@@ -22,6 +22,7 @@ public class CreateNonTicketedEventCommand extends CreateEventCommand {
             for (Event event : ((EntertainmentProvider) context.getUserState().getCurrentUser()).getEvents()) {
                 if (event.getTitle().equals(title)) {
                     titleOK = false;
+                    break;
                 }
             }
 
