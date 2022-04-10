@@ -26,13 +26,16 @@ public class CreateNonTicketedEventCommand extends CreateEventCommand {
             }
 
             if (titleOK) {
+                System.out.println("Title OK");
                 EntertainmentProvider thisProvider = (EntertainmentProvider) context.getUserState().getCurrentUser();
                 NonTicketedEvent newEvent = context.getEventState().createNonTicketedEvent(thisProvider, title, type);
                 thisProvider.addEvent(newEvent);
                 this.eventNumberResult = newEvent.getEventNumber();
-            } else { this.eventNumberResult = null; }
+            } else { this.eventNumberResult = null;
+                System.out.println("Title not OK");}
         } else {
             this.eventNumberResult = null;
+            System.out.println("User not allowed to create");
         }
     }
 

@@ -64,11 +64,13 @@ public class AddEventPerformanceCommand implements ICommand {
 
         boolean unique = true;
         for (Event e : context.getEventState().getAllEvents()) {
-            if (e.getTitle().equals(event.getTitle())) {
-                for (EventPerformance p : e.getPerformances()) {
-                    if (p.getStartDateTime() == startDateTime && p.getEndDateTime() == endDateTime) {
-                        unique = false;
-                        break;
+            if (e.getEventNumber() != event.getEventNumber()) {
+                if (e.getTitle().equals(event.getTitle())) {
+                    for (EventPerformance p : e.getPerformances()) {
+                        if ((p.getStartDateTime().equals(startDateTime)) && (p.getEndDateTime().equals(endDateTime))) {
+                            unique = false;
+                            break;
+                        }
                     }
                 }
             }

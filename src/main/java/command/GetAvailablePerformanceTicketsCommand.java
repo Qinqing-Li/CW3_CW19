@@ -20,12 +20,8 @@ public class GetAvailablePerformanceTicketsCommand implements ICommand {
     public void execute(Context context) {
         for (Event event : context.getEventState().getAllEvents()) {
             if (event.getEventNumber() == eventNumber && event instanceof TicketedEvent) {
-                for (EventPerformance performance : event.getPerformances()) {
-                    if (performance.getPerformanceNumber() == performanceNumber) {
-                        result = ((TicketedEvent) event).getNumTickets();
-                        return;
-                    }
-                }
+                result = context.getEventState().findEventByNumber(eventNumber).getOrganiser()
+                        .getProviderSystem().getNumTicketsLeft(eventNumber, performanceNumber);
             }
         }
     }

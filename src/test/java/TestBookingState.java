@@ -75,7 +75,7 @@ public class TestBookingState {
     @Test
     @DisplayName("testfindBookingByNumber2, non-existing booking number should return null")
     void testFindBookingByNumber2(){
-        assertNull(bookingState.findBookingByNumber(2),
+        assertNull(bookingState.findBookingByNumber(99),
                 "Returned booking should be the same as one created.");
     }
 
@@ -83,7 +83,7 @@ public class TestBookingState {
     @DisplayName("testfindBookingsByEventNumber, should return list of bookings")
     void testFindBookingsByEventNumber(){
         List<Booking> bookings = bookingState.findBookingsByEventNumber(1);
-        assertSame(bookings.get(1), testBooking,
+        assertSame(bookings.get(0), testBooking,
                 "Returned item from booking list is not the same as one created.");
 
     }

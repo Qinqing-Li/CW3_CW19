@@ -5,7 +5,6 @@ import logging.Logger;
 import model.*;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Set;
 import java.util.List;
 import java.util.Arrays;
@@ -21,12 +20,17 @@ public class BookEventSystemTest {
     private static Logger logger;
     private LogStatus status;
     private static Controller controller;
-    private static BookEventCommand BookEventCommand;
-    private static CancelEventCommand CancelEventCommand;
-    private static CreateNonTicketedEventCommand CreateNonTicketedEventCommand;
+    private static BookEventCommand bookTicketedEventCommand;
+    private static BookEventCommand bookNonTicketedEventCommand;
+    private static CreateTicketedEventCommand createTicketedEvent;
+    private static CancelEventCommand cancelEventCommand;
+    private static CreateNonTicketedEventCommand createNonTicketedEventCommand;
     private static GetAvailablePerformanceTicketsCommand GetAvailablePerformanceTicketsCommand;
-    private static RegisterEntertainmentProviderCommand RegisterEntertainmentProviderCommand;
-    private static AddEventPerformanceCommand AddEventPerformanceCommand;
+    private static RegisterEntertainmentProviderCommand registerEntertainmentProviderCommand;
+    private static LoginCommand loginEntertainmentProviderCommand;
+    private static AddEventPerformanceCommand addEventNonTicketedPerformanceCommand;
+    private static AddEventPerformanceCommand addEventTicketedPerformanceCommand;
+    private static AddEventPerformanceCommand addEndedPerformance;
     private static Context context;
 
     //for test5
@@ -62,7 +66,7 @@ public class BookEventSystemTest {
     //mock event performance setup, ongoing event for success case
     //eventNumber : use private final static long successEventNumber = 4;
     private final static String sucvenueAddress = "abc";
-    private final static LocalDateTime sucstartDateTime = LocalDateTime.now();
+    private final static LocalDateTime sucstartDateTime = LocalDateTime.now().plusMinutes(10);
     private final static LocalDateTime sucendDateTime = LocalDateTime.now().plusYears(1);
     private final static List<String> sucperformerNames = Arrays.asList("I", "C");
     private final static boolean suchasSocialDistancing = false;
@@ -75,12 +79,15 @@ public class BookEventSystemTest {
     private final static String title = "free event";
     private final static EventType type = EventType.Music;
 
-    // event with eventNumber 1 is passed ticketed event, 2 is non-ticketed, 3 is cancelled, 4 is ongoing ticketed event
-    private final static long testEventNumber = 1;
-    private final static long test3EventNumber = 99999;
-    private final static long test4EventNumber = 2;
-    private final static long test5EventNumber = 3;
-    private final static long successEventNumber = 4;
+    private static long eventNumberNonTicketed;
+    private static long eventNumberTicketed;
+    private static long performanceNumberEnded;
+
+    private static long performanceNumberNonTicketed;
+    private static long performanceNumberTicketed;
+
+
+
 
     // performance with performanceNumber 1 is valid, 2 is cancelled, 99999 is not valid, 3 is ongoing performance number
     private final static long testPerformanceNumber = 1;
@@ -97,8 +104,84 @@ public class BookEventSystemTest {
                 "07497111111",
                 TESTPASSWORD,
                 TESTEMAIL);
-
         controller.runCommand(registerCmd);
+
+
+        //controller.runCommand(new LogoutCommand());
+
+        //first register a EP
+        registerEntertainmentProviderCommand = new RegisterEntertainmentProviderCommand(
+                orgName,
+                orgAddress,
+                paymentAccountEmail,
+                mainRepName,
+                mainRepEmail,
+                password,
+                otherRepNames,
+                otherRepEmails
+        );
+        controller.runCommand(registerEntertainmentProviderCommand);
+        //controller.runCommand(registerCmd);
+
+        loginEntertainmentProviderCommand = new LoginCommand(mainRepEmail, password);
+
+        //EP create a non-ticketed event --- for test4
+        createNonTicketedEventCommand = new CreateNonTicketedEventCommand(title, type);
+        controller.runCommand(createNonTicketedEventCommand);
+        eventNumberNonTicketed = createNonTicketedEventCommand.getResult();
+
+        //EP add an event performance --- for test4
+        addEventNonTicketedPerformanceCommand = new AddEventPerformanceCommand(
+                eventNumberNonTicketed,
+                venueAddress,
+                startDateTime,
+                endDateTime,
+                performerNames,
+                hasSocialDistancing,
+                hasAirFiltration,
+                isOutdoors,
+                capacityLimit,
+                venueSize
+        );
+        controller.runCommand(addEventNonTicketedPerformanceCommand);
+        performanceNumberNonTicketed = addEventNonTicketedPerformanceCommand.getResult().getPerformanceNumber();
+
+        createTicketedEvent = new CreateTicketedEventCommand("Ticketed",
+                EventType.Dance,
+                300,
+                20,
+                false);
+        controller.runCommand(createTicketedEvent);
+        eventNumberTicketed = createTicketedEvent.getResult();
+
+        //EP add an event performance --- for success case
+        addEventTicketedPerformanceCommand = new AddEventPerformanceCommand(
+                eventNumberTicketed,
+                sucvenueAddress,
+                sucstartDateTime,
+                sucendDateTime,
+                sucperformerNames,
+                suchasSocialDistancing,
+                suchasAirFiltration,
+                sucisOutdoors,
+                succapacityLimit,
+                sucvenueSize
+        );
+        controller.runCommand(addEventTicketedPerformanceCommand);
+        performanceNumberTicketed = addEventTicketedPerformanceCommand.getResult().getPerformanceNumber();
+
+        bookTicketedEventCommand = new BookEventCommand(
+                eventNumberTicketed,
+                performanceNumberTicketed,
+                1
+        );
+
+        bookNonTicketedEventCommand = new BookEventCommand(
+                eventNumberNonTicketed,
+                performanceNumberNonTicketed,
+                1
+        );
+
 
     }
 
@@ -114,12 +197,12 @@ public class BookEventSystemTest {
         System.out.println(info.getDisplayName());
     }
 
-    /*
+
     @AfterEach
     void clearLogs() {
         Logger.getInstance().clearLog();
         System.out.println("---");
-    } */
+    }
 
 
 
@@ -129,60 +212,10 @@ public class BookEventSystemTest {
     public void testReturnError1(){
         this.status = LogStatus.BOOK_EVENT_USER_NOT_CONSUMER;
 
-        //first register a EP
-        controller.runCommand(new RegisterEntertainmentProviderCommand(
-                orgName,
-                orgAddress,
-                paymentAccountEmail,
-                mainRepName,
-                mainRepEmail,
-                password,
-                otherRepNames,
-                otherRepEmails
-        ));
-
-        //then EP login
-        controller.runCommand(new LoginCommand(mainRepEmail,password));
-
-        //EP create a non-ticketed event --- for test4
-        //TODO how to associate event number with test4EventNumber?
-        CreateNonTicketedEventCommand = new CreateNonTicketedEventCommand(title, type);
-        BookEventCommand = new BookEventCommand(
-                testEventNumber,
-                testPerformanceNumber,
-                1
-        );
-
-        //EP add an event performance --- for test8
-        AddEventPerformanceCommand = new AddEventPerformanceCommand(
-                testEventNumber,
-                venueAddress,
-                startDateTime,
-                endDateTime,
-                performerNames,
-                hasSocialDistancing,
-                hasAirFiltration,
-                isOutdoors,
-                capacityLimit,
-                venueSize
-        );
-
-        //EP add an event performace --- for success case
-        AddEventPerformanceCommand = new AddEventPerformanceCommand(
-                successEventNumber,
-                sucvenueAddress,
-                sucstartDateTime,
-                sucendDateTime,
-                sucperformerNames,
-                suchasSocialDistancing,
-                suchasAirFiltration,
-                sucisOutdoors,
-                succapacityLimit,
-                sucvenueSize
-        );
+        controller.runCommand(loginEntertainmentProviderCommand);
 
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-            BookEventCommand.execute(context);
+            controller.runCommand(bookTicketedEventCommand);
         });
         assertEquals(
                 "Logged in user must be a consumer",
@@ -197,16 +230,16 @@ public class BookEventSystemTest {
     @Tag("skipBeforeEach")
     //skip BeforeEach to avoid login, in order to test situation when consumer is not logged in.
     public void testReturnError2(){
-        BookEventCommand = new BookEventCommand(
-                testEventNumber,
+        bookTicketedEventCommand = new BookEventCommand(
+                eventNumberTicketed,
                 testPerformanceNumber,
                 1
         );
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-            BookEventCommand.execute(context);
+            controller.runCommand(bookTicketedEventCommand);
         });
         assertEquals(
-                "Consumer is not logged in.",
+                "Logged in user must be a consumer",
                 expectedError.getMessage(),
                 "Assertion error message should be the same"
         );
@@ -217,12 +250,12 @@ public class BookEventSystemTest {
     @DisplayName("testReturnError3, Error: event with given number does not exist")
     public void testReturnError3(){
         this.status = LogStatus.BOOK_EVENT_EVENT_NOT_FOUND;
-        BookEventCommand = new BookEventCommand(
-                test3EventNumber,
+        bookTicketedEventCommand = new BookEventCommand(
+                504,
                 testPerformanceNumber,
                 1);
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-            BookEventCommand.execute(context);
+            controller.runCommand(bookTicketedEventCommand);
         });
         assertEquals("Event number must correspond to an existing event.", expectedError.getMessage(),
                 "Assertion error message should be the same");
@@ -234,15 +267,11 @@ public class BookEventSystemTest {
     @DisplayName("testReturnError4, Error: only ticketed event can be booked")
     public void testReturnError4(){
         this.status = LogStatus.BOOK_EVENT_NOT_A_TICKETED_EVENT;
+
         //event.getEventNumber() == eventNumber && event instanceof TicketedEvent
         //associate test4EventNumber with non-ticketed event, assume for now
-        BookEventCommand = new BookEventCommand(
-                test4EventNumber,
-                testPerformanceNumber,
-                1
-        );
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-            BookEventCommand.execute(context);
+            controller.runCommand(bookNonTicketedEventCommand);
         });
         assertEquals("Event must be a ticketed event.", expectedError.getMessage(),
                 "Assertion error message should be the same");
@@ -255,19 +284,21 @@ public class BookEventSystemTest {
     public void testReturnError5(){
         this.status = LogStatus.BOOK_EVENT_EVENT_NOT_ACTIVE;
 
+        controller.runCommand(new LogoutCommand());
+        controller.runCommand(loginEntertainmentProviderCommand);
+
         //an event is cancelled by provider
-        CancelEventCommand = new CancelEventCommand(
-                test5EventNumber,
+        cancelEventCommand = new CancelEventCommand(
+                eventNumberTicketed,
                 "event cancelled"
         );
-        //customer try to make a new booking
-        BookEventCommand = new BookEventCommand(
-                test5EventNumber,
-                test5PerformanceNumber,
-                1);
+        controller.runCommand(cancelEventCommand);
+
+        controller.runCommand(new LogoutCommand());
+        controller.runCommand(new LoginCommand(TESTEMAIL, TESTPASSWORD));
 
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-            BookEventCommand.execute(context);
+            controller.runCommand(bookTicketedEventCommand);
         });
 
         assertEquals(
@@ -276,22 +307,55 @@ public class BookEventSystemTest {
                 "Assertion error message should be the same"
         );
 
+
+        controller.runCommand(new LogoutCommand());
+        controller.runCommand(loginEntertainmentProviderCommand);
+
+        // recreate event and performance
+
+        createTicketedEvent = new CreateTicketedEventCommand("Ticketed2",
+                EventType.Dance,
+                300,
+                20,
+                false);
+        controller.runCommand(createTicketedEvent);
+        eventNumberTicketed = createTicketedEvent.getResult();
+
+        addEventTicketedPerformanceCommand = new AddEventPerformanceCommand(
+                eventNumberTicketed,
+                sucvenueAddress,
+                LocalDateTime.now().plusMinutes(11),
+                sucendDateTime,
+                sucperformerNames,
+                suchasSocialDistancing,
+                suchasAirFiltration,
+                sucisOutdoors,
+                succapacityLimit,
+                sucvenueSize
+        );
+        controller.runCommand(addEventTicketedPerformanceCommand);
+        performanceNumberTicketed = addEventTicketedPerformanceCommand.getResult().getPerformanceNumber();
+
+
+        controller.runCommand(createTicketedEvent);
+        controller.runCommand(addEventTicketedPerformanceCommand);
+        controller.runCommand(new LogoutCommand());
     }
 
 
     @Test
-    @DisplayName("testReturnError6, Error: invalid number of tickers provided")
+    @DisplayName("testReturnError6, Error: invalid number of tickets provided")
     public void testReturnError6(){
         this.status = LogStatus.BOOK_EVENT_INVALID_NUM_TICKETS;
 
-        BookEventCommand = new BookEventCommand(
-                testEventNumber,
-                testPerformanceNumber,
+        bookTicketedEventCommand = new BookEventCommand(
+                eventNumberTicketed,
+                performanceNumberTicketed,
                 99999
         );
 
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-            BookEventCommand.execute(context);
+            controller.runCommand(bookTicketedEventCommand);
         });
         assertEquals(
                 "Not enough tickets available.",
@@ -299,12 +363,15 @@ public class BookEventSystemTest {
                 "Assertion error message should be the same"
         );
 
-        BookEventCommand = new BookEventCommand(
-                testEventNumber,
+        bookTicketedEventCommand = new BookEventCommand(
+                eventNumberTicketed,
                 testPerformanceNumber,
                 -99999
         );
 
+        expectedError = assertThrows(AssertionError.class, () -> {
+            controller.runCommand(bookTicketedEventCommand);
+        });
         assertEquals(
                 "Number of tickets must be at least 1.",
                 expectedError.getMessage(),
@@ -314,34 +381,37 @@ public class BookEventSystemTest {
 
 
     @Test
-    @DisplayName("testReturnError7, Error: the payment is unsuccessful")
+    @DisplayName("testReturnError7, Error: performance has already ended")
     public void testReturnError7(){
-        this.status = LogStatus.BOOK_EVENT_PAYMENT_FAILED;
-        if(bookingstatus == BookingStatus.PaymentFailed){
-            AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                BookEventCommand.execute(context);
-            });
-            assertEquals(
-                    "Transaction unsuccessful.",
-                    expectedError.getMessage(),
-                    "Message should indicate transaction unsuccessful"
-            );
-        }
-    }
-
-
-    @Test
-    @DisplayName("testReturnError8, Error: performance has already ended")
-    public void testReturnError8(){
         this.status = LogStatus.BOOK_EVENT_ALREADY_OVER;
-        BookEventCommand = new BookEventCommand(
-                testEventNumber,
-                testPerformanceNumber,
+
+        controller.runCommand(new LogoutCommand());
+        controller.runCommand(loginEntertainmentProviderCommand);
+        addEndedPerformance = new AddEventPerformanceCommand(
+                eventNumberTicketed,
+                sucvenueAddress,
+                LocalDateTime.now().minusMinutes(10),
+                LocalDateTime.now().minusMinutes(9),
+                sucperformerNames,
+                suchasSocialDistancing,
+                suchasAirFiltration,
+                sucisOutdoors,
+                succapacityLimit,
+                sucvenueSize);
+        controller.runCommand(addEndedPerformance);
+        performanceNumberEnded = addEndedPerformance.getResult().getPerformanceNumber();
+        controller.runCommand(new LogoutCommand());
+        controller.runCommand(new LoginCommand(TESTEMAIL, TESTPASSWORD));
+
+        BookEventCommand bookEndedEventCommand = new BookEventCommand(
+                eventNumberTicketed,
+                performanceNumberEnded,
                 1
         );
+
         if(now.isAfter(endDateTime)){
             AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-                BookEventCommand.execute(context);
+                controller.runCommand(bookEndedEventCommand);
             });
             assertEquals(
                     "Selected performance has already ended.",
@@ -355,44 +425,41 @@ public class BookEventSystemTest {
 
 
     @Test
-    @DisplayName("testReturnError9, Error: performance has already ended")
-    public void testReturnError9(){
+    @DisplayName("testReturnError8, Error: Non-existing performance test")
+    public void testReturnError8(){
         this.status = LogStatus.BOOK_EVENT_PERFORMANCE_NOT_FOUND;
-        BookEventCommand = new BookEventCommand(
-                testEventNumber,
-                test9PerformanceNumber,
+        bookTicketedEventCommand = new BookEventCommand(
+                eventNumberTicketed,
+                42,
                 1
         );
         AssertionError expectedError = assertThrows(AssertionError.class, () -> {
-            BookEventCommand.execute(context);
+            controller.runCommand(bookTicketedEventCommand);
         });
         assertEquals(
                 "Performance number must correspond to an existing performance of the event.",
                 expectedError.getMessage(),
-                "Message should indicate transaction unsuccessful"
+                "Message should indicate that it's a non-existing performance"
         );
     }
 
     @Test
     @DisplayName("testSuccessCase, booking was made")
     public void testSuccessCase(){
-        BookEventCommand = new BookEventCommand(
-                successEventNumber,
-                successPerformanceNumber,
-                2
-        );
+
+        controller.runCommand(bookTicketedEventCommand);
+
         GetAvailablePerformanceTicketsCommand = new GetAvailablePerformanceTicketsCommand(
-                successEventNumber,
-                successPerformanceNumber
+                eventNumberTicketed,
+                performanceNumberTicketed
         );
-        controller.runCommand(BookEventCommand);
         controller.runCommand(GetAvailablePerformanceTicketsCommand);
         this.status = LogStatus.BOOK_EVENT_SUCCESS;
 
         assertEquals(
-                2,
+                299,
                 GetAvailablePerformanceTicketsCommand.getResult(),
-                "Result should be num.of tickets: 2");
+                "Result should be num.of tickets: 2, but is: " + GetAvailablePerformanceTicketsCommand.getResult());
     }
 
 }
